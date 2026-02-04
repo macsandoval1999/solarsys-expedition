@@ -1,0 +1,34 @@
+IMAGES
+---------------------------------------------------------
+sun
+Photo by <a href="https://unsplash.com/@nasa?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">NASA</a> on <a href="https://unsplash.com/photos/the-sun-with-a-corona-mass-ejection-JHyiw_dpALk?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>
+
+saturn
+By NASA / JPL / Space Science Institute - http://www.ciclops.org/view/5155/Saturn-Four-Years-On http://www.nasa.gov/images/content/365640main_PIA11141_full.jpg http://photojournal.jpl.nasa.gov/catalog/PIA11141, Public Domain, https://commons.wikimedia.org/w/index.php?curid=7228953
+
+earth
+Photo by <a href="https://unsplash.com/@nypl?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">The New York Public Library</a> on <a href="https://unsplash.com/photos/planet-earth-close-up-photography-yEauzeZU6xo?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>
+
+moon
+Photo by <a href="https://unsplash.com/@mikepetrucci?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Mike Petrucci</a> on <a href="https://unsplash.com/photos/full-moon-photography-uIf6H1or1nE?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>
+
+pluto
+Photo by <a href="https://unsplash.com/@nasa?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">NASA</a> on <a href="https://unsplash.com/photos/pluto-on-a-black-background--5V6VZxSQRo?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>
+
+mars
+Photo by Kevin Gills https://commons.wikimedia.org/wiki/File:Mars_-_August_30_2021_-_Flickr_-_Kevin_M._Gill.png 
+
+mercury
+Photo by NASA/Johns Hopkins University Applied Physics Laboratory/Arizona State University/Carnegie Institution of Washington
+
+venus
+Photo by https://ultraverse.fandom.com/wiki/Venus
+
+jupiter
+By NASA/STSCI (S.T.A.R.S) - https://hubblesite.org/contents/media/images/2024/009/01HPMN3ZGXFN1E0M1W5Y8AVCAM?news=true, Public Domain, https://commons.wikimedia.org/w/index.php?curid=159176801
+
+uranus
+By Ardenau4 - Own workalso published on Flickr: https://www.flickr.com/photos/197038812@N04/53449450202/, CC0, https://commons.wikimedia.org/w/index.php?curid=143666922
+
+neptune
+By NASA / Voyager 2 / PDS / OPUS / Ardenau4 - Own workalso published on Flickr: https://www.flickr.com/photos/197038812@N04/53446862462/, CC0, https://commons.wikimedia.org/w/index.php?curid=143615671
