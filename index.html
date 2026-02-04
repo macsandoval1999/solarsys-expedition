@@ -1,49 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SolarSyst Expedition</title>
-    <link rel="stylesheet" href="styles.css">
-    <script src="universe.js" defer></script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Interactive solar system explorer with real astronomical data." />
+    <title>Solar System Explorer</title>
+    <link rel="stylesheet" href="css/styles.css" />
+    <link rel="stylesheet" href="css/animations.css" />
+    <!-- <script type="module" src="js/universe.js"></script> -->
+    <script type="module" src="js/main.js"></script>
+    <script src="js/cameraController.js" defer></script>
 </head>
+
 <body>
     <header>
-        <h1>SolarSyst Expedition</h1>
+        <h1>Solar System Explorer</h1>
     </header>
-    <main>
-        <div class="planets">
-            <section id="sun">
+
+    <main id="viewport" aria-label="Solar system visualization">
+        <div id="solar-system">
+            <div id="sun">
                 <picture>
-                    <source srcset="assets/images/planets/sun-med.webp" type="image/webp" media="(min-width: 600px)">
-                    <img src="assets/images/planets/sun-small.webp" alt="Sun" loading="lazy">
+                    <source srcset="assets/planet-images/sun-med.webp" type="image/webp">
+                    <img src="assets/planet-images/sun-med.webp" alt="Sun" draggable="false">
                 </picture>
-            </section>
-
-            <section id="earth" class="planet">
-                <section id="moon" class="planet"></section>
-            </section>
-
-            <section id="jupiter" class="planet"></section>
-
-            <section id="saturn" class="planet"></section>
-
-            <section id="uranus" class="planet"></section>
-
-            <section id="neptune" class="planet"></section>
-
-            <section id="mars" class="planet"></section>
-
-            <section id="venus" class="planet"></section>
-
-            <section id="mercury" class="planet"></section>
-
-            <section id="pluto" class="planet"></section>
-
+            </div>
         </div>
     </main>
+
     <footer>
-        <p>&copy; 2024 SolarSyst Expedition. All rights reserved.</p>
+        <p>Data provided by NASA & Le Systeme Solaire API</p>
     </footer>
 </body>
+
 </html>

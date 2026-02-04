@@ -1,4 +1,4 @@
-function createStars() {
+export function createStars() {
     const universe = document.querySelector("body");
     for (let i = 0; i < 1000; i++) {
         const star = document.createElement("div");
@@ -11,4 +11,3 @@ function createStars() {
         universe.appendChild(star);
     }
 }
-createStars();
