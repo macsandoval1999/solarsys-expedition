@@ -2,13 +2,13 @@
      xmlns="http://www.w3.org/2000/svg">
 
   <defs>
-    <radialGradient id="sunCore" r="40%">
+    <radialGradient id="sunCore" cx="64" cy="64" r="14" gradientUnits="userSpaceOnUse">
       <stop offset="0%" stop-color="#FFE08A"/>
       <stop offset="70%" stop-color="#FDB813"/>
       <stop offset="100%" stop-color="#FF8C00"/>
     </radialGradient>
 
-    <filter id="softGlow">
+    <filter id="softGlow" x="-20%" y="-20%" width="140%" height="140%" filterUnits="objectBoundingBox" color-interpolation-filters="sRGB">
       <feGaussianBlur stdDeviation="3" result="blur"/>
       <feMerge>
         <feMergeNode in="blur"/>
@@ -26,10 +26,11 @@
           stroke="rgba(255, 238, 0, 0.25)"
           stroke-width="2"/>
 
-  <!-- Sun -->
-  <circle cx="64" cy="64" r="14"
-          fill="url(#sunCore)"
-          filter="url(#softGlow)"/>
+    <!-- Sun -->
+    <circle cx="64" cy="64" r="14" fill="#FDB813"/>
+    <circle cx="64" cy="64" r="14"
+      fill="url(#sunCore)"
+      filter="url(#softGlow)"/>
 
   <!-- Planet -->
   <circle cx="64" cy="28" r="5" fill="#00e5ff"/>

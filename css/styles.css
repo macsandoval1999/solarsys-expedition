@@ -29,6 +29,11 @@ body {
 h1 {
     text-shadow: var(--heading-glow);
 }
+@media screen and (max-width: 768px) {
+    h1 {
+        font-size: 1.5rem;
+    }
+}
 
 header,
 footer {
@@ -38,6 +43,12 @@ footer {
     gap: 1rem;
     padding: 1.5rem;
     background-color: var(--primary);
+}
+@media screen and (max-width: 768px) {
+    header img {
+        width: 60px;
+        height: 60px;
+    }
 }
 
 .heading-font {
@@ -55,6 +66,11 @@ footer {
     cursor: grab;
     touch-action: none;
     overscroll-behavior: none;
+}
+@media screen and (max-width: 768px) {
+    #viewport {
+        height: 60vh;
+    }
 }
 
 #viewport:active {
