@@ -29,6 +29,7 @@ body {
 h1 {
     text-shadow: var(--heading-glow);
 }
+
 @media screen and (max-width: 768px) {
     h1 {
         font-size: 1.5rem;
@@ -44,6 +45,7 @@ footer {
     padding: 1.5rem;
     background-color: var(--primary);
 }
+
 @media screen and (max-width: 768px) {
     header img {
         width: 60px;
@@ -67,6 +69,7 @@ footer {
     touch-action: none;
     overscroll-behavior: none;
 }
+
 @media screen and (max-width: 768px) {
     #viewport {
         height: 60vh;
@@ -119,6 +122,48 @@ footer {
     -webkit-user-drag: none;
     user-select: none;
     pointer-events: none;
+}
+
+.planet {
+    transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.planet:hover,
+.planet:focus-visible {
+    box-shadow: 0 0 12px 4px rgba(255, 255, 255, 0.85);
+}
+
+.planet-tooltip {
+    position: absolute;
+    left: 50%;
+    bottom: 130%;
+    transform: translate(-50%, 0);
+    opacity: 0;
+    pointer-events: none;
+    padding: 0.5rem 0.75rem;
+    background: rgba(8, 12, 20, 0.9);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    border-radius: 0.5rem;
+    color: var(--text);
+    font-size: 0.75rem;
+    line-height: 1.2;
+    min-width: 180px;
+    z-index: 5;
+    transition: opacity 0.15s ease, transform 0.15s ease;
+}
+
+.planet-tooltip.is-visible {
+    opacity: 1;
+    transform: translate(-50%, -6px);
+}
+
+.planet-tooltip__title {
+    font-weight: 700;
+    margin-bottom: 0.25rem;
+}
+
+.planet-tooltip__row {
+    opacity: 0.85;
 }
 
 .star {

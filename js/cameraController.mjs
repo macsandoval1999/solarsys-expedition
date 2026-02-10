@@ -6,9 +6,11 @@ const camera = {
 
 const MIN_SCALE = 0.4;
 const MAX_SCALE = 3;
+const FLY_IN_SCALE = 6;
 
 const viewport = document.getElementById("viewport");
 const solarWorld = document.getElementById("solar-system");
+let isFlying = false;
 
 if (!viewport || !solarWorld) {
     console.warn("Camera controller: missing #viewport or #solar-system");
@@ -17,9 +19,8 @@ if (!viewport || !solarWorld) {
 solarWorld?.addEventListener("click", (event) => {
     const planetEl = event.target.closest(".planet");
     if (!planetEl) return;
-    const planetName = planetEl.dataset.name;
-    if (!planetName) return;
-    window.location.href = `planet-pages/planet.html?planet=${planetName}`;
+    if (isFlying) return;
+    focusOnPlanet(planetEl);
 });
 
 
@@ -28,6 +29,7 @@ let lastX = 0;
 let lastY = 0;
 
 viewport?.addEventListener("mousedown", (e) => {
+    if (isFlying) return;
     if (e.target.closest(".planet")) {
         return;
     }
@@ -42,6 +44,7 @@ window.addEventListener("mouseup", () => {
 
 window.addEventListener("mousemove", (e) => {
     if (!isDragging) return;
+    if (isFlying) return;
 
     camera.x += e.clientX - lastX;
     camera.y += e.clientY - lastY;
@@ -56,6 +59,7 @@ window.addEventListener("mousemove", (e) => {
 viewport?.addEventListener(
     "wheel",
     (e) => {
+        if (isFlying) return;
         e.preventDefault();
 
         const zoomAmount = e.deltaY * -0.001;
@@ -74,6 +78,7 @@ let lastPinchDistance = 0;
 viewport?.addEventListener(
     "touchstart",
     (e) => {
+        if (isFlying) return;
         if (e.target.closest(".planet")) return;
         if (e.touches.length === 1) {
             isTouchDragging = true;
@@ -90,6 +95,7 @@ viewport?.addEventListener(
 viewport?.addEventListener(
     "touchmove",
     (e) => {
+        if (isFlying) return;
         e.preventDefault();
         if (e.touches.length === 1 && isTouchDragging) {
             const touch = e.touches[0];
@@ -114,6 +120,7 @@ viewport?.addEventListener(
 viewport?.addEventListener(
     "touchend",
     (e) => {
+        if (isFlying) return;
         if (e.touches.length === 0) {
             isTouchDragging = false;
             lastPinchDistance = 0;
@@ -140,17 +147,35 @@ function getTouchDistance(t1, t2) {
 
 
 function focusOnPlanet(planetEl) {
+    if (!solarWorld || !viewport) return;
+    const planetName = planetEl.dataset.name;
+    if (!planetName) return;
     const rect = planetEl.getBoundingClientRect();
+    const planetScreenX = rect.left + rect.width / 2;
+    const planetScreenY = rect.top + rect.height / 2;
+    const viewportRect = viewport.getBoundingClientRect();
+    const baseX = viewportRect.left + viewportRect.width / 2;
+    const baseY = viewportRect.top + viewportRect.height / 2;
+    const originX = solarWorld.offsetWidth / 2;
+    const originY = solarWorld.offsetHeight / 2;
+    const currentScale = camera.scale;
+    const targetScale = FLY_IN_SCALE;
+    const planetWorldX = originX + (planetScreenX - baseX - camera.x - originX) / currentScale;
+    const planetWorldY = originY + (planetScreenY - baseY - camera.y - originY) / currentScale;
 
-    camera.x -= rect.left - window.innerWidth / 2;
-    camera.y -= rect.top - window.innerHeight / 2;
-    camera.scale = 4;
+    planetEl.classList.add("is-target");
+    solarWorld.classList.add("is-flying");
+    viewport.classList.add("is-flying");
+    isFlying = true;
 
-    if (!solarWorld) return;
-    solarWorld.style.transition = "transform 1.2s ease-in-out";
+    camera.x = -(targetScale * (planetWorldX - originX) + originX);
+    camera.y = -(targetScale * (planetWorldY - originY) + originY);
+    camera.scale = targetScale;
+
+    solarWorld.style.transition = "transform 3s cubic-bezier(0.2, 0.8, 0.2, 1)";
     updateCamera();
 
     setTimeout(() => {
-        window.location.href = `planet-pages/planet.html?planet=${planetEl.dataset.name}`;
-    }, 1200);
+        window.location.href = `planet-pages/planet.html?planet=${planetName}`;
+    }, 1150);
 }

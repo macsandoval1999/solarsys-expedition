@@ -1,7 +1,8 @@
 import { initSolarSystem } from "./solarSystem.mjs";
-import { createStars } from "./utils.mjs";
+import { createStars, loadHeaderFooter } from "./utils.mjs";
 
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", async () => {
     createStars();
-    initSolarSystem();
+    await initSolarSystem();
+    loadHeaderFooter();
 });
