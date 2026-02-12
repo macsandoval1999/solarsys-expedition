@@ -1,0 +1,74 @@
+{
+    "Earth": {
+        "name": "Earth",
+        "size": 20,
+        "distance": 170,
+        "imageSmall": "assets/planet-images/earth-small.webp",
+        "imageMed": "assets/planet-images/earth-med.webp",
+        "orbitSpeed": 60,
+        "rotationSpeed": 0.02
+    },
+    "Mercury": {
+        "name": "Mercury",
+        "size": 12,
+        "distance": 80,
+        "imageSmall": "assets/planet-images/mercury-small.webp",
+        "imageMed": "assets/planet-images/mercury-med.webp",
+        "orbitSpeed": 60,
+        "rotationSpeed": 0.02
+    },
+    "Venus": {
+        "name": "Venus",
+        "size": 20,
+        "distance": 120,
+        "imageSmall": "assets/planet-images/venus-small.webp",
+        "imageMed": "assets/planet-images/venus-med.webp",
+        "orbitSpeed": 60,
+        "rotationSpeed": 0.02
+    },
+    "Mars": {
+        "name": "Mars",
+        "size": 16,
+        "distance": 220,
+        "imageSmall": "assets/planet-images/mars-small.webp",
+        "imageMed": "assets/planet-images/mars-med.webp",
+        "orbitSpeed": 60,
+        "rotationSpeed": 0.02
+    },
+    "Jupiter": {
+        "name": "Jupiter",
+        "size": 40,
+        "distance": 300,
+        "imageSmall": "assets/planet-images/jupiter-small.webp",
+        "imageMed": "assets/planet-images/jupiter-med.webp",
+        "orbitSpeed": 60,
+        "rotationSpeed": 0.02
+    },
+    "Saturn": {
+        "name": "Saturn",
+        "size": 36,
+        "distance": 400,
+        "imageSmall": "assets/planet-images/saturn-small.webp",
+        "imageMed": "assets/planet-images/saturn-med.webp",
+        "orbitSpeed": 60,
+        "rotationSpeed": 0.02
+    },
+    "Uranus": {
+        "name": "Uranus",
+        "size": 28,
+        "distance": 500,
+        "imageSmall": "assets/planet-images/uranus-small.webp",
+        "imageMed": "assets/planet-images/uranus-med.webp",
+        "orbitSpeed": 60,
+        "rotationSpeed": 0.02
+    },
+    "Neptune": {
+        "name": "Neptune",
+        "size": 28,
+        "distance": 600,
+        "imageSmall": "assets/planet-images/neptune-small.webp",
+        "imageMed": "assets/planet-images/neptune-med.webp",
+        "orbitSpeed": 60,
+        "rotationSpeed": 0.02
+    }
+}

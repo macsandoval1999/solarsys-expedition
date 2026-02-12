@@ -6,16 +6,50 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Planet Details</title>
     <link rel="stylesheet" href="../css/styles.css"/>
-    <script src="../js/planetPage.js" type="module"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <script src="../js/planetDetails.js" type="module"></script>
 </head>
 
 <body>
-    <main id="planet-detail">
-        <h1 id="planet-name"></h1>
-        <section id="facts"></section>
-        <section id="gallery"></section>
+    <header id="main-header"></header>
+    <main>
+        <section id="planet-hero">
+            <h1 id="planet-name"></h1>
+            <picture>
+                <source id="planet-image-webp" srcset="" type="image/webp">
+                <img id="planet-image" src="" alt="Planet Image" draggable="false">
+            </picture>
+        </section>
+
+        <div id="planet-info-body">  
+            <section id="planet-data-container">
+                <div class="planet-data-card" id="planet-size">
+                    <h2>Size</h2>
+                    <p><strong>Mass: <br><span id="planet-mass"></span></strong></p>
+                    <p><strong>Avg. Radius: <br><span id="planet-radius"></span></strong></p>
+                </div>
+
+                <div class="planet-data-card" id="planet-orbit">
+                    <h2>Orbit</h2>
+                    <p><strong>Orbital Period: <br><span id="planet-orbital-period"></span></strong></p>
+                    <p><strong>Semi-Major Axis: <br><span id="planet-semi-major-axis"></span></strong></p>
+                </div>
+
+                <div class="planet-data-card" id="planet-more-info">
+                    <h2>More Info</h2>
+                    <p><strong>Distance from Earth: <br><span id="planet-distance"></span></strong></p>
+                    <p><strong>Avg. Surface Temperature: <br><span id="planet-temperature"></span></strong></p>
+                </div>
+            </section>
+
+            <section id ="planet-images"></section>
+
+        </div>
     </main>
 
+    <footer id="main-footer"></footer>
 
 </body>
 
