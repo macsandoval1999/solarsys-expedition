@@ -77,7 +77,7 @@ async function loadTemplate(url) {
     return template;
 }
 
-export async function loadHeaderFooter() {
+export async function loadPageMutuals() {
     const headerTemplate = await loadTemplate(new URL("../partials/header.html", import.meta.url));
     const footerTemplate = await loadTemplate(new URL("../partials/footer.html", import.meta.url));
     const headerElement = document.getElementById("main-header");
@@ -85,6 +85,7 @@ export async function loadHeaderFooter() {
 
     renderWithTemplate(headerTemplate, headerElement,); 
     renderWithTemplate(footerTemplate, footerElement,); 
+    createStars();
 }
 
 export async function loadPlanetsConfig() {

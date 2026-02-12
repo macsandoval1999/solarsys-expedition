@@ -7,6 +7,7 @@ const camera = {
 const MIN_SCALE = 0.4;
 const MAX_SCALE = 3;
 const FLY_IN_SCALE = 6;
+const FLY_IN_VERTICAL_OFFSET = 120; // pixels to nudge planet toward vertical center
 
 const viewport = document.getElementById("viewport");
 const solarWorld = document.getElementById("solar-system");
@@ -169,7 +170,9 @@ function focusOnPlanet(planetEl) {
     isFlying = true;
 
     camera.x = -(targetScale * (planetWorldX - originX) + originX);
-    camera.y = -(targetScale * (planetWorldY - originY) + originY);
+    // Nudge the final camera Y a bit further up so the clicked
+    // planet appears closer to the vertical center of the viewport.
+    camera.y = -(targetScale * (planetWorldY - originY) + originY) - FLY_IN_VERTICAL_OFFSET;
     camera.scale = targetScale;
 
     solarWorld.style.transition = "transform 3s cubic-bezier(0.2, 0.8, 0.2, 1)";

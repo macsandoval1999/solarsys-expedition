@@ -1,10 +1,10 @@
 :root {
     --space: #000000;
     --primary: #0e142075;
-    --accent: #aab3c5;
-    --highlight: #eaefff;
-    --box-border: #00e5ff;
-    --box-glow: #8b5cf6;
+    --accent: #ffae00;
+    --secondary-body: #1a1a1a;
+    --data-card-glow: #00e5ff;
+    --data-card: #00000080;
     --sun-glow: 0 0 150px 15px rgba(255, 208, 0, 0.815);
     --heading-glow: 0 0 20px rgba(218, 178, 0, 0.623);
     --text: #ffffff;
@@ -12,10 +12,11 @@
 
 * {
     box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
 
 body {
-    margin: 0;
     background: var(--space);
     color: var(--text);
     font-family: Arial, sans-serif;
@@ -25,15 +26,12 @@ body {
     font-weight: 400;
     font-style: normal;
 }
+main {
+    min-height: 100vh;
+}
 
 h1 {
     text-shadow: var(--heading-glow);
-}
-
-@media screen and (max-width: 768px) {
-    h1 {
-        font-size: 1.5rem;
-    }
 }
 
 header,
@@ -46,12 +44,6 @@ footer {
     background-color: var(--primary);
 }
 
-@media screen and (max-width: 768px) {
-    header img {
-        width: 60px;
-        height: 60px;
-    }
-}
 
 .heading-font {
     font-family: "JetBrains Mono", monospace;
@@ -62,18 +54,13 @@ footer {
 
 #viewport {
     width: 100vw;
-    height: 80vh;
+    height: 70vh;
     overflow: hidden;
     position: relative;
     cursor: grab;
     touch-action: none;
     overscroll-behavior: none;
-}
-
-@media screen and (max-width: 768px) {
-    #viewport {
-        height: 60vh;
-    }
+    border-bottom: 5rem solid var(--primary);
 }
 
 #viewport:active {
@@ -183,5 +170,132 @@ footer {
 
     50% {
         opacity: 1;
+    }
+}
+
+
+@media screen and (max-width: 768px) {
+    h1 {
+            font-size: 1.5rem;
+    }
+    #viewport {
+        height: 60vh;
+    }
+    header img {
+        width: 60px;
+        height: 60px;
+    }
+}
+
+
+
+/**************************************
+ * Planet Detail Page Styles
+ **************************************/
+#planet-hero {
+    position: relative;
+    width: 100%;
+    height: 45vh;
+    max-height: 500px;
+    margin: 0 auto;
+    overflow: hidden;
+    display: block;
+}
+#planet-hero img {
+    position: absolute;
+    top: 0%;
+    left: 50%;
+    width: 100%;
+    max-width: 820px;
+    height: 100%;
+    transform: translate(-50%, 0%);
+    object-fit: cover;
+    filter: brightness(0.75) drop-shadow(0 0 20px rgba(255, 255, 255, 0.5));
+    padding: 0 1rem;
+}
+#planet-hero.planet-hero-saturn img {
+    width: 70%;
+    object-fit: contain;
+}
+#planet-hero h1 {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: var(--text);
+    text-shadow: 0 0 40px var(--space);
+    font-size: 2.5rem;
+    z-index: 1;
+}
+
+
+
+#planet-info-body {
+    display: block;
+    background-color: var(--primary);
+}
+#planet-data-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    padding: 2rem;
+    justify-content: space-evenly;
+    align-items: center;
+}
+.planet-data-card {
+    background-color: var(--data-card);
+    box-shadow: 1px 1px 10px var(--data-card-glow);
+    border-radius: 0.5rem;
+    padding: 1rem;
+    width: 300px;
+    text-align: left;
+    line-height: 1.4;
+}
+.planet-data-card h2 {
+    margin-bottom: 0.5rem;
+}
+.planet-data-card span {
+    color: var(--accent);
+}
+.planet-data-card p {
+    margin-bottom: 0.5rem;
+}
+
+
+
+#planet-images {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    background-color: var(--secondary-body);
+    padding: 3rem 1rem;
+}
+.planet-image-card {
+    background-color: var(--primary);
+    border: 1px solid rgba(0, 0, 0, 0.4);
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.planet-image-card img {
+    display: block;
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+}
+
+.planet-image-card figcaption {
+    padding: 0.75rem 1rem 1rem;
+    font-size: 0.9rem;
+    line-height: 1.4;
+}
+
+
+
+@media screen and (max-width: 450px) {
+    #planet-hero {
+        margin: 0 auto;
+    }
+    #planet-hero img {
+        padding: 0;
     }
 }
