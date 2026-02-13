@@ -131,8 +131,8 @@ function findPlanetConfig(planetsConfig, query) {
 function resolveAssetPath(path) {
   if (!path) return "";
   if (path.startsWith("http")) return path;
-  if (path.startsWith("/")) return path;
-  return `../${path}`;
+  if (path.startsWith("/")) return path.slice(1);
+  return path;
 }
 
 function createGalleryFigure(src, alt, caption) {
