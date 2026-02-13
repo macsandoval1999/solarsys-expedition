@@ -1,7 +1,7 @@
 import { Planet } from "./planet.js";
 
 async function loadPlanetsConfig() {
-    const response = await fetch(new URL("../json/planets.json", import.meta.url));
+    const response = await fetch(new URL("../assets/json/planets.json", import.meta.url));
     const data = await response.json();
     return Object.values(data);
 };
