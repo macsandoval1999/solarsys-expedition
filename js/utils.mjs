@@ -78,8 +78,8 @@ async function loadTemplate(url) {
 }
 
 export async function loadPageMutuals() {
-    const headerTemplate = await loadTemplate(new URL("../partials/header.html", import.meta.url));
-    const footerTemplate = await loadTemplate(new URL("../partials/footer.html", import.meta.url));
+    const headerTemplate = await loadTemplate(new URL("../assets/partials/header.html", import.meta.url));
+    const footerTemplate = await loadTemplate(new URL("../assets/partials/footer.html", import.meta.url));
     const headerElement = document.getElementById("main-header");
     const footerElement = document.getElementById("main-footer");
 
@@ -89,7 +89,7 @@ export async function loadPageMutuals() {
 }
 
 export async function loadPlanetsConfig() {
-    const response = await fetch(new URL("../json/planets.json", import.meta.url));
+    const response = await fetch(new URL("../assets/json/planets.json", import.meta.url));
     const data = await response.json();
     return Object.values(data);
 }
