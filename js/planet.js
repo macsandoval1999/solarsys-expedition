@@ -1,6 +1,4 @@
-import ExternalServices from "./externalServices.mjs";
-
-const services = new ExternalServices();
+import { fetchPlanetData } from "./api/ninjaPlanetsApi.mjs";
 
 export class Planet {
     constructor(data) {
@@ -47,7 +45,7 @@ export class Planet {
             tooltip.classList.add("is-visible");
             if (this.tooltipLoaded) return;
             try {
-                const planetData = await services.getPlanet(
+                const planetData = await fetchPlanetData(
                     this.data.name.toLowerCase()
                 );
                 tooltip.innerHTML = this.buildTooltipContent(planetData);

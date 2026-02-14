@@ -6,7 +6,21 @@
         "imageSmall": "assets/planet-images/earth-small.webp",
         "imageMed": "assets/planet-images/earth-med.webp",
         "orbitSpeed": 60,
-        "rotationSpeed": 0.02
+        "rotationSpeed": 0.02,
+        "moonsDetails": {
+            "Moon": {
+                "name": "Moon",
+                "size": 5,
+                "distance": 30,
+                "imageSmall": "assets/moon-images/moon-small.webp",
+                "imageMed": "assets/moon-images/moon-med.webp",
+                "orbitSpeed": 120,
+                "rotationSpeed": 0.01,
+                "description": "Earth's only natural satellite, the Moon is a rocky body that orbits Earth every 27.3 days. It has a significant impact on Earth's tides and has been a subject of human fascination for millennia."
+            }
+        },
+        "smallDescription": "Our home planet, the third from the Sun. It has a rich diversity of life and is the only known planet to support life.",
+        "fullDescription": "Earth is the third planet from the Sun and the only known planet to support life. It has a rich diversity of ecosystems, a breathable atmosphere, and abundant water. Earth's climate and geological activity create a dynamic environment that sustains a wide variety of life forms. The planet's surface is <span class='highlight'>71% water</span>, with vast oceans that regulate temperature and weather patterns. <br><br>Earth's atmosphere protects life from harmful solar radiation and helps maintain a stable climate. The planet's magnetic field shields it from solar winds, making it a safe haven for life to thrive. Earth has one natural satellite, <span class='highlight'>the Moon</span>, which influences tides and has been a focal point of human exploration. The planet's unique combination of factors makes it a rare and precious place in the universe."
     },
     "Mercury": {
         "name": "Mercury",
@@ -15,7 +29,10 @@
         "imageSmall": "assets/planet-images/mercury-small.webp",
         "imageMed": "assets/planet-images/mercury-med.webp",
         "orbitSpeed": 60,
-        "rotationSpeed": 0.02
+        "rotationSpeed": 0.02,
+        "moonsDetails": {},
+        "smallDescription": "The smallest planet in our Solar System and closest to the Sun. It has a rocky surface and extreme temperature variations.",
+        "fullDescription": "Mercury is the smallest planet in our Solar System and the closest to the Sun. It has a rocky surface covered in craters, similar to our Moon. Due to its proximity to the Sun, Mercury experiences extreme temperature variations, with daytime temperatures soaring up to <span class='highlight'>430C (800F)</span> and nighttime temperatures plummeting to <span class='highlight'>-180C (-290F)</span>. The planet has no atmosphere to retain heat, which contributes to these drastic temperature changes. <br><br>Mercury has a very slow rotation, taking about <span class='highlight'>59 Earth days</span> to complete one rotation, while it orbits the Sun every <span class='highlight'>88 Earth days</span>. Despite its small size and harsh conditions, Mercury has been a subject of scientific interest and exploration, providing insights into the formation and evolution of our Solar System. It has <span class='highlight'>no moons</span> and is often visible from Earth during twilight hours, making it a fascinating object for astronomers and stargazers alike. Mercury's unique characteristics and extreme environment make it a compelling subject of study in planetary science."
     },
     "Venus": {
         "name": "Venus",
@@ -24,7 +41,10 @@
         "imageSmall": "assets/planet-images/venus-small.webp",
         "imageMed": "assets/planet-images/venus-med.webp",
         "orbitSpeed": 60,
-        "rotationSpeed": 0.02
+        "rotationSpeed": 0.02,
+        "moonsDetails": {},
+        "smallDescription": "The second planet from the Sun, often called Earth's sister planet. It has a thick atmosphere and is the hottest planet in our Solar System.",
+        "fullDescription": "Venus is the second planet from the Sun and is often referred to as Earth's sister planet due to its similar size and composition. However, Venus has a thick atmosphere composed mainly of carbon dioxide, with clouds of sulfuric acid, making it the hottest planet in our Solar System. Surface temperatures on Venus can reach up to <span class='highlight'>465C (869F)</span>, hot enough to melt lead. The planet's atmosphere creates a strong greenhouse effect, trapping heat and causing extreme surface conditions. <br><br>Venus rotates very slowly and in the opposite direction to most planets, taking about <span class='highlight'>243 Earth days</span> to complete one rotation. It orbits the Sun every <span class='highlight'>225 Earth days</span>. Despite its harsh environment, Venus has been a target for exploration, with several missions sent to study its atmosphere and surface. The planet's unique characteristics and extreme conditions make it an intriguing subject for scientists studying planetary atmospheres and climate. <br><br>Venus has <span class='highlight'>no moons</span> and is often visible from Earth as a bright object in the sky, earning it the nickname Morning Star or Evening Star depending on its position relative to the Sun. Venus's extreme environment and unique features continue to captivate scientists and astronomers, providing valuable insights into planetary science and the dynamics of atmospheres."
     },
     "Mars": {
         "name": "Mars",
@@ -33,7 +53,10 @@
         "imageSmall": "assets/planet-images/mars-small.webp",
         "imageMed": "assets/planet-images/mars-med.webp",
         "orbitSpeed": 60,
-        "rotationSpeed": 0.02
+        "rotationSpeed": 0.02,
+        "moonsDetails": {},
+        "smallDescription": "The fourth planet from the Sun, known as the Red Planet. It has a thin atmosphere and is home to the tallest volcano and deepest canyon in the Solar System.",
+        "fullDescription": "Mars is the fourth planet from the Sun and is often referred to as the Red Planet due to its reddish appearance, which is caused by iron oxide (rust) on its surface. Mars has a thin atmosphere composed mainly of carbon dioxide, with traces of nitrogen and argon. The planet's surface features include the <span class='highlight'>largest volcano in the Solar System, Olympus Mons</span>, and the <span class='highlight'>deepest canyon, Valles Marineris</span>. Mars has <span class='highlight'>two small moons, Phobos and Deimos</span>, which are thought to be captured asteroids. <br><br>The planet's rotation period is similar to Earth's, with a day lasting about <span class='highlight'>24.6 hours</span>, and it orbits the Sun every <span class='highlight'>687 Earth days</span>. Mars has been a target for exploration due to its potential for past or present life, with numerous missions sent to study its surface, atmosphere, and climate. The planet's unique characteristics and potential for human exploration make it a fascinating subject for scientists and space enthusiasts alike. <br><br>Mars has been the focus of many missions, including rovers and orbiters, which have provided valuable insights into its geology, climate, and potential habitability. The planet's thin atmosphere and harsh surface conditions present challenges for exploration, but ongoing research and technological advancements continue to pave the way for future missions to Mars, including potential human colonization. Mars's intriguing features and potential for discovery make it a key focus in the search for life beyond Earth and the study of planetary science."
     },
     "Jupiter": {
         "name": "Jupiter",
@@ -42,7 +65,10 @@
         "imageSmall": "assets/planet-images/jupiter-small.webp",
         "imageMed": "assets/planet-images/jupiter-med.webp",
         "orbitSpeed": 60,
-        "rotationSpeed": 0.02
+        "rotationSpeed": 0.02,
+        "moonsDetails": {},
+        "smallDescription": "The largest planet in the Solar System, known for its Great Red Spot and many moons.",
+        "fullDescription": "Jupiter is the fifth planet from the Sun and the largest in the Solar System. It is a gas giant with a composition primarily of hydrogen and helium. Jupiter is known for its <span class='highlight'>Great Red Spot, a giant storm that has been raging for centuries</span>, and its extensive system of moons, including the <span class='highlight'>four large Galilean moons: Io, Europa, Ganymede, and Callisto</span>. The planet's rapid rotation causes it to have a noticeable equatorial bulge. Jupiter's strong magnetic field and numerous moons make it a fascinating object of study in planetary science. The planet's immense size and gravitational influence have a significant impact on the Solar System, affecting the orbits of other celestial bodies and contributing to the stability of the asteroid belt. <br><br>Jupiter has been explored by several spacecraft, including the Pioneer and Voyager missions, as well as the Galileo orbiter and the Juno mission, which continues to study the planet's atmosphere, magnetic field, and interior structure. Jupiter's many moons also offer intriguing possibilities for future exploration, particularly Europa, which is believed to have a <span class='highlight'>subsurface ocean that could potentially harbor life</span>. The planet's role in the Solar System and its fascinating features continue to inspire scientific research and exploration, providing valuable insights into the nature of gas giants and the dynamics of planetary systems."
     },
     "Saturn": {
         "name": "Saturn",
@@ -51,7 +77,10 @@
         "imageSmall": "assets/planet-images/saturn-small.webp",
         "imageMed": "assets/planet-images/saturn-med.webp",
         "orbitSpeed": 60,
-        "rotationSpeed": 0.02
+        "rotationSpeed": 0.02,
+        "moonsDetails": {},
+        "smallDescription": "The sixth planet from the Sun, known for its extensive ring system.",
+        "fullDescription": "Saturn is the sixth planet from the Sun and is renowned for its <span class='highlight'>stunning ring system</span>, which is composed of ice and rock particles. It is a gas giant primarily made of hydrogen and helium. Saturn has <span class='highlight'>numerous moons</span>, with Titan being the largest and one of the most intriguing due to its thick atmosphere and surface lakes of liquid methane. The planet's low density would allow it to float in water if a large enough body existed. Saturn's rings and moons make it a fascinating subject for study in planetary science. <br><br>The planet's rapid rotation causes it to have a <span class='highlight'>noticeable equatorial bulge</span>, and its strong magnetic field contributes to its unique characteristics. Saturn has been explored by several spacecraft, including the Pioneer and Voyager missions, as well as the Cassini-Huygens mission, which provided detailed information about the planet's rings, moons, and atmosphere. The planet's extensive ring system and diverse moons offer valuable insights into the processes of planetary formation and the dynamics of celestial bodies. Saturn's beauty and complexity continue to captivate scientists and space enthusiasts alike."
     },
     "Uranus": {
         "name": "Uranus",
@@ -60,7 +89,10 @@
         "imageSmall": "assets/planet-images/uranus-small.webp",
         "imageMed": "assets/planet-images/uranus-med.webp",
         "orbitSpeed": 60,
-        "rotationSpeed": 0.02
+        "rotationSpeed": 0.02,
+        "moonsDetails": {},
+        "smallDescription": "The seventh planet from the Sun, known for its blue-green color and unique tilt.",
+        "fullDescription": "Uranus is the seventh planet from the Sun and is known for its distinctive blue-green color, which is due to the presence of methane in its atmosphere. It is an <span class='highlight'>ice giant</span>, composed mainly of hydrogen, helium, and ices such as water, ammonia, and methane. Uranus has a <span class='highlight'>unique axial tilt of about 98 degrees</span>, causing it to rotate on its side relative to its orbit around the Sun. This results in <span class='highlight'>extreme seasonal variations</span>, with each pole experiencing <span class='highlight'>42 years of continuous sunlight followed by 42 years of darkness</span>. <br><br>The planet has a <span class='highlight'>faint ring system</span> and <span class='highlight'>numerous moons</span>, with Titania being the largest. Uranus orbits the Sun every <span class='highlight'>84 Earth years</span> and has a rotation period of about <span class='highlight'>17 hours</span>. The planet's unique characteristics and extreme tilt make it a fascinating subject for study in planetary science. Uranus has been explored by the Voyager 2 spacecraft, which provided valuable insights into its atmosphere, rings, and moons. The planet's unusual features and dynamic environment continue to captivate scientists and space enthusiasts alike."
     },
     "Neptune": {
         "name": "Neptune",
@@ -69,6 +101,9 @@
         "imageSmall": "assets/planet-images/neptune-small.webp",
         "imageMed": "assets/planet-images/neptune-med.webp",
         "orbitSpeed": 60,
-        "rotationSpeed": 0.02
+        "rotationSpeed": 0.02,
+        "moonsDetails": {},
+        "smallDescription": "The eighth planet from the Sun, known for its deep blue color and strong winds.",
+        "fullDescription": "Neptune is the eighth and farthest planet from the Sun in our Solar System. It is an <span class='highlight'>ice giant</span>, composed mainly of hydrogen, helium, and ices such as water, ammonia, and methane. Neptune's deep blue color is due to the presence of methane in its atmosphere, which absorbs red light and reflects blue light. The planet is known for its <span class='highlight'>strong winds</span>, which can reach speeds of up to <span class='highlight'>2,100 kilometers per hour (1,300 miles per hour)</span>, making it the windiest planet in the Solar System. Neptune has a <span class='highlight'>faint ring system</span> and <span class='highlight'>several moons</span>, with Triton being the largest and most intriguing due to its retrograde orbit and geologically active surface. <br><br>Neptune orbits the Sun every <span class='highlight'>165 Earth years</span> and has a rotation period of about <span class='highlight'>16 hours</span>. The planet's unique characteristics and dynamic atmosphere make it a fascinating subject for study in planetary science. Neptune was explored by the Voyager 2 spacecraft, which provided valuable insights into its atmosphere, rings, and moons. The planet's distant location and intriguing features continue to captivate scientists and space enthusiasts alike. Neptune's extreme winds and dynamic weather patterns make it a key focus in the study of planetary atmospheres and the dynamics of celestial bodies in the outer Solar System."
     }
 }

@@ -11,15 +11,20 @@
     <link rel="stylesheet" href="css/animations.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono&family=Share+Tech+Mono&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono&family=Share+Tech+Mono&display=swap" rel="stylesheet">
     <script type="module" src="js/main.js"></script>
     <script src="js/cameraController.mjs" defer></script>
 </head>
 
 <body>
     <header id="main-header"></header>
+
     <main>
+        <div class="intro">
+            <h2>The Cosmic Frontier</h2>
+            <p class="instructions">Use your mouse or touch gestures to explore the solar system.</p>
+        </div>
+
         <div id="viewport" aria-label="Solar system visualization">
             <div id="solar-system">
                 <div id="sun">
@@ -30,6 +35,9 @@
                 </div>
             </div>
         </div>
+
+        <div class="divider"></div>
+
 
         <div id="pic-of-the-day"></div>
     </main>

@@ -6,5 +6,6 @@ export async function fetchPlanetImages(name) {
     );
     if (!response.ok) throw new Error("NASA image search failed");
     const data = await response.json();
+    // console.log("NASA API response", data);
     return data.collection.items ?? [];
 }
