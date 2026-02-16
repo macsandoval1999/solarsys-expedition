@@ -93,6 +93,7 @@ footer {
 #viewport {
     width: 100vw;
     height: 75vh;
+    min-height: 450px;
     overflow: hidden;
     position: relative;
     cursor: grab;
