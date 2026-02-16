@@ -16,6 +16,7 @@ import {
     buildApodArchiveUrl,
     buildApodFavorite,
     getApodData,
+    preloadNinjaPlanetsData,
 } from "./dataStuff.mjs";
 
 const RESOURCE_FAVORITES_KEY = "favoriteResources";
@@ -27,6 +28,7 @@ const SESSION_WELCOME_KEY = "welcomeShown";
 export function initHomePage() {
     initSolarSystem();
     loadPageMutuals();
+    preloadNinjaPlanetsData();
     loadPicOfTheDay();
     renderFavoriteGallery();
 }

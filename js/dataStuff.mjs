@@ -1,16 +1,34 @@
 import { fetchApod, fetchPlanetImages } from "./api/nasaApi.mjs";
 import { fetchPlanetData } from "./api/ninjaPlanetsApi.mjs";
+import { getLocalStorage, setLocalStorage } from "./utils.mjs";
 
 const APOD_ARCHIVE_BASE = "https://apod.nasa.gov/apod/ap";
 const JUPITER_MASS_KG = 1.898e27;
 const JUPITER_RADIUS_KM = 69911;
+const NINJA_PLANETS_STORAGE_KEY = "planetData";
 
 export async function getApodData() {
     return fetchApod();
 }
 
 export async function getPlanetData(query) {
-    return fetchPlanetData(query);
+    const normalized = query?.toLowerCase?.() ?? "";
+    if (!normalized) {
+        return fetchPlanetData(query);
+    }
+
+    const cache = getCachedNinjaPlanets();
+    if (cache?.[normalized]) {
+        return cache[normalized];
+    }
+
+    const fetched = await fetchPlanetData(query);
+    if (fetched) {
+        const nextCache = { ...(cache || {}) };
+        nextCache[normalized] = fetched;
+        setCachedNinjaPlanets(nextCache);
+    }
+    return fetched;
 }
 
 export async function getPlanetImages(name) {
@@ -23,6 +41,40 @@ export async function loadPlanetsConfig() {
     );
     const data = await response.json();
     return Object.values(data);
+}
+
+export async function preloadNinjaPlanetsData() {
+    const cache = getCachedNinjaPlanets();
+    if (cache && Object.keys(cache).length) return cache;
+
+    const planets = await loadPlanetsConfig();
+    const names = planets
+        .map((planet) => planet?.name)
+        .filter((name) => typeof name === "string" && name.trim().length > 0);
+
+    const results = await Promise.all(
+        names.map(async (name) => {
+            try {
+                const data = await fetchPlanetData(name);
+                return [name.toLowerCase(), data];
+            } catch (error) {
+                console.warn("Failed to preload planet data", name, error);
+                return null;
+            }
+        })
+    );
+
+    const nextCache = results.reduce((acc, entry) => {
+        if (!entry) return acc;
+        const [key, value] = entry;
+        if (value) {
+            acc[key] = value;
+        }
+        return acc;
+    }, {});
+
+    setCachedNinjaPlanets(nextCache);
+    return nextCache;
 }
 
 export function buildApodArchiveUrl(date) {
@@ -180,4 +232,16 @@ export function toTitleCase(value) {
         .split(" ")
         .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
         .join(" ");
+}
+
+function getCachedNinjaPlanets() {
+    const stored = getLocalStorage(NINJA_PLANETS_STORAGE_KEY);
+    if (stored && typeof stored === "object") {
+        return stored;
+    }
+    return null;
+}
+
+function setCachedNinjaPlanets(cache) {
+    setLocalStorage(NINJA_PLANETS_STORAGE_KEY, cache);
 }
