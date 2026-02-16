@@ -11,13 +11,13 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono&family=Share+Tech+Mono&display=swap"
         rel="stylesheet">
-    <script src="js/planetDetails.js" type="module"></script>
+    <script src="js/planetPage.js" type="module"></script>
 </head>
 
 <body>
     <header id="main-header"></header>
     <main>
-        <section id="planet-hero">
+        <section id="planet-hero" class="heading-font">
             <h1 id="planet-name"></h1>
             <picture>
                 <source id="planet-image-webp" srcset="" type="image/webp">
@@ -27,33 +27,33 @@
 
         <div id="planet-info-body">
 
-            
-            <h2 class="planetary-heading">Planetary Data</h2>
+
+            <h2 class="heading-font planetary-heading">Planetary Data</h2>
             <section id="planet-data-container">
                 <div class="planet-data-card" id="planet-size">
-                    <h2>Size</h2>
+                    <h2 class="heading-font">Size</h2>
                     <p><strong>Mass: <br><span id="planet-mass"></span></strong></p>
                     <p><strong>Avg. Radius: <br><span id="planet-radius"></span></strong></p>
                 </div>
 
                 <div class="planet-data-card" id="planet-orbit">
-                    <h2>Orbit</h2>
+                    <h2 class="heading-font">Orbit</h2>
                     <p><strong>Orbital Period: <br><span id="planet-orbital-period"></span></strong></p>
                     <p><strong>Semi-Major Axis: <br><span id="planet-semi-major-axis"></span></strong></p>
                 </div>
 
                 <div class="planet-data-card" id="planet-more-info">
-                    <h2>More Info</h2>
+                    <h2 class="heading-font">More Info</h2>
                     <p><strong>Distance from Earth: <br><span id="planet-distance"></span></strong></p>
                     <p><strong>Avg. Surface Temperature: <br><span id="planet-temperature"></span></strong></p>
                 </div>
             </section>
-                        <h2 class="planetary-heading">Overview</h2>
+            <h2 class="heading-font planetary-heading">Overview</h2>
             <section id="planet-description">
                 <p id="planet-full-description"></p>
             </section>
-            
-            <h2 class="planetary-heading">Gallery</h2>
+
+            <h2 class="heading-font planetary-heading">Gallery</h2>
             <section id="planet-images"></section>
 
         </div>

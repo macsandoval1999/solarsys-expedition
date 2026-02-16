@@ -2,7 +2,7 @@
     --space: #000000;
     --primary: #0e142075;
     --accent: #ffae00;
-    --secondary-body: #1a1a1a;
+    --secondary-body: #1a1a1aaf;
     --data-card-glow: #00e5ff;
     --data-card: #00000080;
     --sun-glow: 0 0 150px 15px rgba(255, 208, 0, 0.815);
@@ -27,7 +27,9 @@ body {
     font-style: normal;
     position: relative;
     min-height: 100vh;
+    max-height: fit-content;
 }
+
 main {
     min-height: 100vh;
 }
@@ -35,6 +37,7 @@ main {
 h1 {
     text-shadow: var(--heading-glow);
 }
+
 h2 {
     margin-bottom: 1rem;
     color: var(--accent);
@@ -68,9 +71,14 @@ footer {
     font-style: normal;
 }
 
+.main-heading {
+    color: var(--text);
+    margin-left: 1.5rem;
+}
+
 .intro {
     position: absolute;
-    margin: 1.5rem;
+    margin: 2rem 3rem;
     padding: 2rem;
     width: fit-content;
     max-width: 800px;
@@ -163,7 +171,7 @@ footer {
     color: var(--text);
     font-size: 0.75rem;
     line-height: 1.2;
-    min-width: 180px;
+    width: 240px;
     z-index: 5;
     transition: opacity 0.15s ease, transform 0.15s ease;
 }
@@ -180,6 +188,130 @@ footer {
 
 .planet-tooltip__row {
     opacity: 0.85;
+}
+
+#pic-of-the-day-container {
+    padding: 2rem 1.2rem 3rem;
+    background-color: var(--secondary-body);
+}
+
+.apod-card {
+    max-width: 900px;
+    margin: 0 auto;
+    background-color: var(--data-card);
+    border: 1px solid rgba(119, 119, 119, 0.4);
+    border-radius: 8px;
+    padding: 1.5rem;
+    box-shadow: 0 0 20px rgba(0, 229, 255, 0.2);
+    position: relative;
+}
+
+.apod-card h2 {
+    margin-bottom: 0.25rem;
+}
+
+.apod-date {
+    margin-bottom: 1rem;
+    opacity: 0.8;
+}
+
+.apod-media {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 6px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    margin: 0 auto 1rem auto;
+    max-width: 600px;
+
+}
+
+.apod-explanation {
+    line-height: 1.6;
+    margin-bottom: 1rem;
+}
+
+.apod-meta {
+    font-size: 0.8rem;
+    opacity: 0.85;
+    line-height: 1.4;
+    margin-bottom: 1rem;
+}
+
+.apod-meta-link {
+    color: var(--accent);
+    text-decoration: none;
+    display: inline-block;
+    margin-bottom: 0.25rem;
+}
+
+.apod-meta-link:hover,
+.apod-meta-link:focus-visible {
+    text-decoration: underline;
+}
+
+#welcome-modal-container {
+    border: none;
+    padding: 0;
+    background: transparent;
+    color: var(--text);
+    margin: auto;
+}
+
+#welcome-modal-container::backdrop {
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(2px);
+}
+
+.welcome-modal {
+    background: linear-gradient(135deg, rgba(6, 16, 30, 0.98), rgba(0, 0, 0, 0.95));
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 12px;
+    box-shadow: 0 0 40px rgba(0, 229, 255, 0.25);
+    padding: 1.5rem;
+    max-width: 420px;
+    width: min(90vw, 420px);
+    animation: welcome-pop 1s ease-out;
+}
+
+@keyframes welcome-pop {
+    0% {
+        opacity: 0;
+        transform: translateY(6px) scale(0.75);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.welcome-modal h2 {
+    margin-bottom: 0.75rem;
+    color: var(--accent);
+}
+
+.welcome-modal p {
+    margin-bottom: 0.6rem;
+    opacity: 0.9;
+    line-height: 1.5;
+}
+
+.welcome-close {
+    margin-top: 0.5rem;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: rgba(0, 0, 0, 0.4);
+    color: var(--text);
+    padding: 0.5rem 1.1rem;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.welcome-close:hover,
+.welcome-close:focus-visible {
+    transform: translateY(-1px);
+    box-shadow: 0 0 12px rgba(255, 174, 0, 0.4);
 }
 
 .star {
@@ -205,11 +337,13 @@ footer {
 
 @media screen and (max-width: 768px) {
     h1 {
-            font-size: 1.5rem;
+        font-size: 1.5rem;
     }
+
     #viewport {
         height: 60vh;
     }
+
     header img {
         width: 60px;
         height: 60px;
@@ -230,6 +364,7 @@ footer {
     overflow: hidden;
     display: block;
 }
+
 #planet-hero img {
     position: absolute;
     top: 0%;
@@ -242,10 +377,12 @@ footer {
     filter: brightness(0.75) drop-shadow(0 0 20px rgba(255, 255, 255, 0.5));
     padding: 0 1rem;
 }
+
 #planet-hero.planet-hero-saturn img {
     width: 70%;
     object-fit: contain;
 }
+
 #planet-hero h1 {
     position: absolute;
     top: 50%;
@@ -263,6 +400,7 @@ footer {
     display: block;
     background-color: var(--primary);
 }
+
 #planet-data-container {
     display: flex;
     flex-wrap: wrap;
@@ -271,6 +409,7 @@ footer {
     justify-content: space-evenly;
     align-items: center;
 }
+
 .planet-data-card {
     background-color: var(--data-card);
     box-shadow: 1px 1px 10px var(--data-card-glow);
@@ -280,12 +419,15 @@ footer {
     text-align: left;
     line-height: 1.4;
 }
+
 .planet-data-card h2 {
     margin-bottom: 0.5rem;
 }
+
 .planet-data-card span {
     color: var(--accent);
 }
+
 .planet-data-card p {
     margin-bottom: 0.5rem;
 }
@@ -298,6 +440,7 @@ footer {
     background-color: var(--secondary-body);
     padding: 3rem 1rem;
 }
+
 .planet-image-card {
     background-color: var(--primary);
     border: 1px solid rgba(119, 119, 119, 0.4);
@@ -357,13 +500,159 @@ footer {
     transition: all 0.2s ease;
 }
 
+#favorite-images {
+    padding: 2rem 1.2rem 3rem;
+    background-color: var(--secondary-body);
+}
 
+#favorite-images .main-heading {
+    max-width: 1200px;
+}
+
+#favorites-gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    align-items: start;
+    justify-content: center;
+    justify-items: center;
+}
+
+.favorite-card {
+    background-color: var(--data-card);
+    border: 1px solid rgba(119, 119, 119, 0.4);
+    border-radius: 6px;
+    overflow: hidden;
+    position: relative;
+    width: 100%;
+    height: fit-content;
+    max-width: 400px;
+}
+
+.favorite-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    display: block;
+}
+
+.favorite-card figcaption {
+    padding: 0.75rem 1rem 1rem;
+    font-size: 0.9rem;
+    line-height: 1.4;
+}
+
+.favorite-title {
+    font-weight: 700;
+    margin-bottom: 0.25rem;
+}
+
+.favorite-meta {
+    opacity: 0.85;
+}
+
+.favorite-meta-link {
+    color: var(--accent);
+    text-decoration: none;
+    display: block;
+    margin-top: 0.15rem;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+}
+
+.favorite-meta-link:hover,
+.favorite-meta-link:focus-visible {
+    text-decoration: underline;
+}
+
+footer {
+    margin-top: 3rem;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.credentials strong {
+    display: block;
+    margin-top: 1rem;
+}
+
+.credentials ul {
+    list-style: none;
+}
+
+.credentials a {
+    margin-left: 10px;
+}
+
+
+.media-bar {
+    display: flex;
+    gap: 2rem;
+}
+
+.media-bar a {
+    text-decoration: none;
+}
+
+.media-bar img {
+    width: 35px;
+    height: 35px;
+}
+
+
+#last-modified,
+#current-year {
+    color: var(--accent)
+}
+
+.project-link {
+    color: var(--accent);
+    text-decoration: none;
+    font-size: 0.9rem;
+    display: block;
+    margin-top: 0.5rem;
+}
+
+.project-link:hover,
+.project-link:focus-visible {
+    text-decoration: underline;
+}
+
+@media screen and (max-width: 900px) {
+    footer {
+        flex-direction: column;
+        gap: 2rem;
+        font-size: 0.8rem;
+    }
+}
 
 @media screen and (max-width: 450px) {
     #planet-hero {
         margin: 0 auto;
     }
+
     #planet-hero img {
         padding: 0;
+    }
+
+    .intro {
+        margin: 1.5rem 1rem;
+        width: 75%;
+        height: fit-content;
+        padding: 0.5rem;
+        font-size: 0.9rem;
+    }
+
+    .intro p,
+    .intro h2 {
+        margin: 0;
+    }
+
+    .media-bar img {
+        width: 30px;
+        height: 30px;
     }
 }

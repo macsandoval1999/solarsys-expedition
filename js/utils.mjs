@@ -39,6 +39,36 @@ export function setLocalStorage(key, data) {
     localStorage.setItem(key, JSON.stringify(data));
 }
 
+export function loadFavoritesByKey(storageKey) {
+    const stored = getLocalStorage(storageKey);
+    return Array.isArray(stored) ? stored : [];
+}
+
+export function saveFavoritesByKey(storageKey, favorites) {
+    setLocalStorage(storageKey, favorites);
+}
+
+export function toggleFavoriteByKey(storageKey, item) {
+    const favorites = loadFavoritesByKey(storageKey);
+    const existingIndex = favorites.findIndex(
+        (favorite) => favorite.id === item.id
+    );
+
+    if (existingIndex >= 0) {
+        favorites.splice(existingIndex, 1);
+        saveFavoritesByKey(storageKey, favorites);
+        return false;
+    }
+
+    favorites.push(item);
+    saveFavoritesByKey(storageKey, favorites);
+    return true;
+}
+
+export function isFavoriteByKey(storageKey, id) {
+    return loadFavoritesByKey(storageKey).some((favorite) => favorite.id === id);
+}
+
 
 
 /* Function to select a single DOM element
@@ -52,9 +82,9 @@ export function qs(selector, parent = document) {
 /* Function to set click and touch event listeners
 Usages: */
 export function setClick(selector, callback) {
-    qs(selector).addEventListener("touchend", (event) => { 
-        event.preventDefault(); 
-        callback(); 
+    qs(selector).addEventListener("touchend", (event) => {
+        event.preventDefault();
+        callback();
     });
     qs(selector).addEventListener("click", callback);
 }
@@ -79,6 +109,24 @@ export function renderWithTemplate(template, parentElement, data, callback) {
     }
 };
 
+export function setText(element, value) {
+    if (element) {
+        element.textContent = value ?? "n/a";
+    }
+}
+
+export function setHtml(element, value) {
+    if (element) {
+        element.innerHTML = value ?? "n/a";
+    }
+}
+
+export function createStatusMessage(message) {
+    const paragraph = document.createElement("p");
+    paragraph.textContent = message;
+    return paragraph;
+}
+
 async function loadTemplate(url) {
     const result = await fetch(url);
     const template = await result.text();
@@ -91,13 +139,17 @@ export async function loadPageMutuals() {
     const headerElement = document.getElementById("main-header");
     const footerElement = document.getElementById("main-footer");
 
-    renderWithTemplate(headerTemplate, headerElement,); 
-    renderWithTemplate(footerTemplate, footerElement,); 
+    renderWithTemplate(headerTemplate, headerElement,);
+    renderWithTemplate(footerTemplate, footerElement,);
     createStars();
+    copyRightDates();
 }
 
-export async function loadPlanetsConfig() {
-    const response = await fetch(new URL("../assets/json/planets.json", import.meta.url));
-    const data = await response.json();
-    return Object.values(data);
+function copyRightDates() {
+    const today = new Date(); 
+    const year = document.querySelector("#current-year");
+    year.innerHTML = `${today.getFullYear()}`;
+
+    const lastModified = document.querySelector('#last-modified');
+    lastModified.innerHTML = `Last Modification: ${document.lastModified}`;
 }

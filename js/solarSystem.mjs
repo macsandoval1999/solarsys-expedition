@@ -1,4 +1,4 @@
-import { Planet } from "./planet.js";
+import { Planet } from "./solarPlanet.mjs";
 
 async function loadPlanetsConfig() {
     const response = await fetch(new URL("../assets/json/planets.json", import.meta.url));

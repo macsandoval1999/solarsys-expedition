@@ -1,11 +1,10 @@
-import { initSolarSystem } from "./solarSystem.mjs";
-import { loadPageMutuals } from "./utils.mjs";
+import {
+    handleApodFavoriteUpdated,
+    handlePageShow,
+    initHomePage,
+} from "./mainServices.mjs";
 
-window.addEventListener("pageshow", (event) => {
-    if (event.persisted) {
-        window.location.reload();
-    }
-});
+window.addEventListener("DOMContentLoaded", initHomePage);
+window.addEventListener("pageshow", handlePageShow);
+document.addEventListener("apodFavoriteUpdated", handleApodFavoriteUpdated);
 
-initSolarSystem();
-loadPageMutuals();

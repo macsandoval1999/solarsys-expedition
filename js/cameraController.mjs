@@ -39,6 +39,10 @@ viewport?.addEventListener("mousedown", (e) => {
     lastY = e.clientY;
 });
 
+viewport?.addEventListener("dragstart", (e) => {
+    e.preventDefault();
+});
+
 window.addEventListener("mouseup", () => {
     isDragging = false;
 });

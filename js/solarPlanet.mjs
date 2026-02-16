@@ -1,5 +1,3 @@
-import { fetchPlanetData } from "./api/ninjaPlanetsApi.mjs";
-
 export class Planet {
     constructor(data) {
         this.data = data;
@@ -39,24 +37,40 @@ export class Planet {
         const tooltip = document.createElement("div");
         tooltip.className = "planet-tooltip";
         tooltip.textContent = `Loading ${this.data.name}...`;
-        this.element.appendChild(tooltip);
+        tooltip.style.display = "none";
+        document.body.appendChild(tooltip);
+        let tooltipRafId = null;
 
-        const showTooltip = async () => {
+        const updateTooltipPosition = () => {
+            if (!tooltip.classList.contains("is-visible")) return;
+            const rect = this.element.getBoundingClientRect();
+            const centerX = rect.left + rect.width / 2;
+            const topY = rect.top;
+            tooltip.style.left = `${centerX}px`;
+            tooltip.style.top = `${topY}px`;
+            tooltip.style.bottom = "auto";
+            tooltip.style.transform = "translate(-50%, calc(-100% - 12px))";
+            tooltipRafId = requestAnimationFrame(updateTooltipPosition);
+        };
+
+        const showTooltip = () => {
             tooltip.classList.add("is-visible");
-            if (this.tooltipLoaded) return;
-            try {
-                const planetData = await fetchPlanetData(
-                    this.data.name.toLowerCase()
-                );
-                tooltip.innerHTML = this.buildTooltipContent(planetData);
+            if (!this.tooltipLoaded) {
+                tooltip.innerHTML = this.buildTooltipContent();
                 this.tooltipLoaded = true;
-            } catch {
-                tooltip.textContent = `${this.data.name} data unavailable`;
             }
+            tooltip.style.position = "fixed";
+            tooltip.style.display = "block";
+            updateTooltipPosition();
         };
 
         const hideTooltip = () => {
             tooltip.classList.remove("is-visible");
+            tooltip.style.display = "none";
+            if (tooltipRafId) {
+                cancelAnimationFrame(tooltipRafId);
+                tooltipRafId = null;
+            }
         };
 
         this.element.addEventListener("mouseenter", showTooltip);
@@ -82,28 +96,13 @@ export class Planet {
         return this.data.name.toLowerCase() === "saturn";
     }
 
-    buildTooltipContent(data) {
-        const semimajorAxis = this.formatDistance(
-            data?.semimajorAxis ?? data?.semi_major_axis
-        );
-        const perihelion = this.formatDistance(data?.perihelion);
-        const aphelion = this.formatDistance(data?.aphelion);
-        const radius = this.formatDistance(data?.radius);
-        const mass = data?.mass ?? null;
-
+    buildTooltipContent() {
+        const title = this.data?.name ?? "Planet";
+        const description = this.data?.smallDescription ?? "Description unavailable.";
         return `
-            <div class="planet-tooltip__title">${data?.englishName ?? data?.name ?? this.data.name}</div>
-            <div class="planet-tooltip__row">Semimajor axis: ${semimajorAxis}</div>
-            <div class="planet-tooltip__row">Perihelion: ${perihelion}</div>
-            <div class="planet-tooltip__row">Aphelion: ${aphelion}</div>
-            <div class="planet-tooltip__row">Radius: ${radius}</div>
-            <div class="planet-tooltip__row">Mass: ${mass ?? "n/a"}</div>
+            <div class="planet-tooltip__title">${title}</div>
+            <div class="planet-tooltip__row">${description}</div>
         `;
-    }
-
-    formatDistance(value) {
-        if (!value && value !== 0) return "n/a";
-        return `${Number(value).toLocaleString()} km`;
     }
 
 }
