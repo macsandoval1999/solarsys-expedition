@@ -1,10 +1,51 @@
+/* ********************************************
+ Star Animation for background
+ ******************************************** */
+.star {
+    position: absolute;
+    background-color: rgba(255, 255, 255, 0.521);
+    border-radius: 50%;
+    z-index: -1;
+    animation: twinkle 5s infinite;
+}
+@keyframes twinkle {
+    0%,
+    100% {
+        opacity: 0.5;
+    }
+    50% {
+        opacity: 1;
+    }
+}
+
+
+
+/* ********************************************
+ Welcome Message Animation for modal welcome message
+ ******************************************** */
+@keyframes welcome-pop {
+    0% {
+        opacity: 0;
+        transform: translateY(6px) scale(0.75);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+
+
+/* ********************************************
+ Orbit Animations
+ ******************************************** */
 .orbit {
     position: absolute;
     border: 1px dashed rgba(255, 255, 255, 0.2);
     border-radius: 50%;
     pointer-events: none;
 }
-
 .orbit-rotation {
     position: absolute;
     top: 0;
@@ -14,36 +55,37 @@
     pointer-events: none;
 }
 
+
+
+/* ********************************************
+ Planet Classes
+ ******************************************** */
+/* The main planet element is responsible for positioning and receiving pointer events. The surface wrapper and surface elements are used to display the planet's texture. They are separate from the main planet element to allow for better layering and animation control. We need these elements to not interfere with pointer events on the main planet element. */
 .planet {
     position: absolute;
     border-radius: 50%;
     cursor: pointer;
-    pointer-events: auto;
-    overflow: visible;
+    pointer-events: auto; /* Ensure planets can receive pointer events. This solves the issue of planets not being clickable */
 }
-
-.planet--ringed {
-    overflow: visible;
-}
-
+/* The surface element is used to display the planet's texture. It is separate from the main planet element to allow for better layering and animation control. We need this element to not interfere with pointer events on the main planet element. */
 .planet-surface {
     width: 100%;
     height: 100%;
     border-radius: 50%;
     background-size: cover;
     background-position: center;
-    pointer-events: none;
+    pointer-events: none; /* Ensure surface doesn't block pointer events on the planet element */
 }
-
+/* The surface wrapper is used to contain the surface element. It is separate from the main planet element to allow for better layering and animation control. We need this element to not interfere with pointer events on the main planet element. */
 .planet-surface-wrapper {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    pointer-events: none;
+    pointer-events: none; /* Ensure wrapper doesn't block pointer events on the planet element */
 }
-
+/* Special styles for ringed planets. The wrapper is enlarged to accommodate the rings, and the surface is set to contain the texture without cropping. */
 .planet-surface-wrapper--ringed {
     width: 160%;
     height: 160%;
@@ -51,49 +93,19 @@
     left: 50%;
     transform: translate(-50%, -50%);
 }
-
+/* For ringed planets, we want the surface to be contained within the wrapper without cropping, so we use background-size: contain. We also remove the border-radius to allow the rings to extend beyond the circular shape of the planet. */
 .planet-surface--ringed {
     border-radius: 0;
     background-size: contain;
     background-repeat: no-repeat;
 }
 
-.rotate {
-    animation: spin linear infinite;
-}
 
-.planet-spin {
-    animation: spin linear infinite;
-}
 
-.spin-reverse {
-    animation-direction: reverse;
-}
-
-#solar-system.is-flying {
-    will-change: transform;
-}
-
-#viewport::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: radial-gradient(circle at center, rgba(255, 255, 255, 0.08) 0%, rgba(0, 0, 0, 0.55) 55%, rgba(0, 0, 0, 0.9) 100%);
-    opacity: 0;
-    transition: opacity 0.5s ease;
-    pointer-events: none;
-    z-index: 3;
-}
-
-#viewport.is-flying::after {
-    opacity: 1;
-}
-
-.planet.is-target {
-    animation: target-glow 0.9s ease-in-out;
-    box-shadow: 0 0 12px 4px rgba(255, 255, 255, 0.85);
-}
-
+/* ********************************************
+ Animations 
+ ******************************************** */
+/* inner rotation animation */
 @keyframes spin {
     from {
         transform: rotate(0deg);
@@ -103,19 +115,19 @@
         transform: rotate(360deg);
     }
 }
-
-@keyframes twinkle {
-
-    0%,
-    100% {
-        opacity: 0.5;
+    .rotate {
+        animation: spin linear infinite;
+    }
+    .planet-spin {
+        animation: spin linear infinite;
+    }
+    .spin-reverse {
+        animation-direction: reverse;
     }
 
-    50% {
-        opacity: 1;
-    }
-}
 
+
+/* target animation */
 @keyframes target-glow {
     0% {
         box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.15);
@@ -129,3 +141,32 @@
         box-shadow: 0 0 12px 4px rgba(255, 255, 255, 0.85);
     }
 }
+    .planet.is-target {
+        animation: target-glow 0.9s ease-in-out;
+        box-shadow: 0 0 12px 4px rgba(255, 255, 255, 0.85);
+    }
+
+
+
+/* ********************************************
+ Camera fly-in overlay
+ ******************************************** */
+/* When flying, we apply a subtle radial gradient overlay to the viewport to enhance the sense of depth and speed. */
+/* The actual fly-in animation is handled via JS in the cameraController file by transitioning the camera's position and scale properties. The CSS here is just for the visual effects during the fly-in. */
+/* The radial gradient overlay applied to the viewport during fly-in. This creates a subtle vignette effect that enhances the sense of depth and speed as the camera zooms in on the target planet. The opacity of this overlay is transitioned to create a smooth fade-in effect when flying. */
+/* The ::after pseudo-element is used to create the overlay without needing an additional HTML element. It is positioned absolutely to cover the entire viewport, and its opacity is transitioned when the .is-flying class is added to the #viewport element. */
+#viewport::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at center, rgba(255, 255, 255, 0.08) 0%, rgba(0, 0, 0, 0.55) 55%, rgba(0, 0, 0, 0.9) 100%);
+    opacity: 0; /* Start with the overlay hidden */
+    transition: opacity 0.5s ease;
+    pointer-events: none;
+    z-index: 3;
+}
+/* When the .is-flying class is added to the #viewport, we transition the opacity of the overlay to create a smooth fade-in effect. This enhances the visual impact of the fly-in animation and helps to immerse the user in the experience. */
+#viewport.is-flying::after {
+    opacity: 1;
+}
+

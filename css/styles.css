@@ -1,3 +1,6 @@
+/* *************************************************************************************************************/
+/* Global Styles and Variables *********************************************************************************/
+/* *************************************************************************************************************/
 :root {
     --space: #000000;
     --primary: #0e142075;
@@ -20,18 +23,16 @@ body {
     background: var(--space);
     color: var(--text);
     font-family: Arial, sans-serif;
-    overflow-x: hidden;
+    overflow-x: hidden; /* Prevent horizontal scroll */
     font-family: "Share Tech Mono", monospace;
-    font-optical-sizing: auto;
     font-weight: 400;
     font-style: normal;
     position: relative;
     min-height: 100vh;
-    max-height: fit-content;
 }
 
 main {
-    min-height: 100vh;
+    min-height: 100vh; /* Ensure main takes up full solsystem-container height for footer positioning */
 }
 
 h1 {
@@ -40,16 +41,6 @@ h1 {
 
 h2 {
     margin-bottom: 1rem;
-    color: var(--accent);
-}
-
-.divider {
-    width: 100%;
-    height: 5rem;
-    background-color: var(--primary);
-}
-
-.highlight {
     color: var(--accent);
 }
 
@@ -63,10 +54,77 @@ footer {
     background-color: var(--primary);
 }
 
+footer {
+    margin-top: 3rem;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+    /* The attributions/credits section */
+        .credentials strong {
+            display: block;
+            margin-top: 1rem;
+        }
+        .credentials ul {
+            list-style: none;
+        }
+        .credentials a {
+            margin-left: 10px;
+        }
+    /* Container for the media links in the footer, using flexbox to layout the links with spacing */
+    .media-bar {
+        display: flex;
+        gap: 2rem;
+    }
+        .media-bar a {
+            text-decoration: none;
+            transition : all 0.2s ease;
+        }
+            /* On hover or focus, media links will have a circular border and slight upward movement for better interactivity */
+            .media-bar a:hover,
+            .media-bar a:focus-visible {
+                border-radius: 50%;
+                transform: translateY(-2px);
+                transition: all 0.2s ease;
+            }
+        .media-bar img {
+            width: 35px;
+            height: 35px;
+        }
+    /* The last modified date and current year in the footer, styled with the accent color for better visibility */
+    #last-modified,
+    #current-year {
+        color: var(--accent)
+    }
+    /* The project link in the footer, styled with the accent color and hover effects for better interactivity */
+    .project-link {
+        color: var(--accent);
+        text-decoration: none;
+        font-size: 0.9rem;
+        display: block;
+        margin-top: 0.5rem;
+    }
+        /* On hover or focus, the project link will be underlined for better interactivity */
+        .project-link:hover,
+        .project-link:focus-visible {
+            text-decoration: underline;
+        }
+
+/* *************************************************************************************************************/
+/* Reusable Styles *********************************************************************************************/
+/* *************************************************************************************************************/
+.divider {
+    width: 100%;
+    height: 5rem;
+    background-color: var(--primary);
+}
+
+.highlight {
+    color: var(--accent);
+}
 
 .heading-font {
     font-family: "JetBrains Mono", monospace;
-    font-optical-sizing: auto;
     font-weight: 400;
     font-style: normal;
 }
@@ -76,7 +134,13 @@ footer {
     margin-left: 1.5rem;
 }
 
-.intro {
+
+
+/* *************************************************************************************************************/
+/* Home Page Styles ********************************************************************************************/
+/* *************************************************************************************************************/
+/* Intro and Instructions box for solar system*/
+.intro { 
     position: absolute;
     margin: 2rem 3rem;
     padding: 2rem;
@@ -89,113 +153,107 @@ footer {
     background-color: var(--data-card);
 }
 
-
-#viewport {
+/* solsystem-container Box for  */
+#solsystem-container {
     width: 100vw;
     height: 75vh;
     min-height: 450px;
     overflow: hidden;
     position: relative;
     cursor: grab;
-    touch-action: none;
-    overscroll-behavior: none;
+    touch-action: none; /* Disable default touch behaviors for better touch interaction */
+    overscroll-behavior: none; /* Prevent scroll chaining on mobile when dragging */
+}
+/* When the container is being actively dragged */
+#solsystem-container:active { 
+    cursor: grabbing; /* Change cursor to grabbing for better feedback */
 }
 
-#viewport:active {
-    cursor: grabbing;
-}
-
-#solar-system {
-    width: 3000px;
-    height: 3000px;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform-origin: center;
-    transform: translate(-50%, -50%) scale(1);
-}
-
-#sun {
-    width: 60px;
-    height: 60px;
-    background-image: url("../assets/planet-images/sun-med.webp");
-    background-size: cover;
-    background-position: center;
-    border-radius: 50%;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    box-shadow: var(--sun-glow);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    picture {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-
-        & img {
-            width: 130%;
-            height: 130%;
-        }
+    /* The solar system "world" that contains all planets and the sun */
+    #solar-system {
+        width: 3000px;
+        height: 3000px;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) scale(1);
     }
-}
+        /* The sun element, centered in the solar system */
+        #sun {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            box-shadow: var(--sun-glow);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        #sun picture {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+        }
+        #sun img {
+            width: 230%;
+            height: 230%;
+            -webkit-user-drag: none;
+            user-select: none;
+            pointer-events: none;
+        }
 
-#sun img {
-    -webkit-user-drag: none;
-    user-select: none;
-    pointer-events: none;
-}
+        /* Planet bodies in the solar system */
+        .planet {
+            transition: box-shadow 0.2s ease, transform 0.2s ease; /* Smooth hover effect before hover */
+        }
+        /* On hover or focus, planets will have a brighter glow and slight scale-up for interactivity */
+        .planet:hover,
+        .planet:focus-visible {
+            box-shadow: 0 0 12px 4px rgba(255, 255, 255, 0.85);
+        }
+            /* Planet tip box for planet information, initially hidden with opacity 0 */
+            .planet-tip {
+                position: absolute;
+                left: 50%; /* Center horizontally on the planet */
+                bottom: 130%; /* Position above the planet */
+                transform: translate(-50%, 0); /* Center the tooltip horizontally */
+                pointer-events: none; /* Allow clicks to pass through to the planet */
+                opacity: 0;
+                padding: 0.5rem 0.75rem;
+                background: var(--primary);
+                backdrop-filter: blur(2px);
+                border: 1px solid rgba(255, 255, 255, 0.4);
+                border-radius: 0.5rem;
+                color: var(--text);
+                font-size: 0.75rem;
+                line-height: 1.2;
+                width: 240px;
+                z-index: 5;
+                transition: opacity 0.6s ease;
+            }
+            /* When the tooltip has the "is-visible" class, opacity is set to 1 */
+            .planet-tip.is-visible {
+                opacity: 1;
+                transition: opacity 0.2s ease; /* Faster fade-in when becoming visible */
+            }
+            /* Title and description styles within the planet tip */
+            .planet-tip__title {
+                font-weight: 700;
+                margin-bottom: 0.25rem;
+            }
+            .planet-tip__description {
+                opacity: 0.85;
+            }
 
-.planet {
-    transition: box-shadow 0.2s ease, transform 0.2s ease;
-}
-
-.planet:hover,
-.planet:focus-visible {
-    box-shadow: 0 0 12px 4px rgba(255, 255, 255, 0.85);
-}
-
-.planet-tooltip {
-    position: absolute;
-    left: 50%;
-    bottom: 130%;
-    transform: translate(-50%, 0);
-    opacity: 0;
-    pointer-events: none;
-    padding: 0.5rem 0.75rem;
-    background: rgba(8, 12, 20, 0.9);
-    border: 1px solid rgba(255, 255, 255, 0.4);
-    border-radius: 0.5rem;
-    color: var(--text);
-    font-size: 0.75rem;
-    line-height: 1.2;
-    width: 240px;
-    z-index: 5;
-    transition: opacity 0.15s ease, transform 0.15s ease;
-}
-
-.planet-tooltip.is-visible {
-    opacity: 1;
-    transform: translate(-50%, -6px);
-}
-
-.planet-tooltip__title {
-    font-weight: 700;
-    margin-bottom: 0.25rem;
-}
-
-.planet-tooltip__row {
-    opacity: 0.85;
-}
-
+/* Picture of the Day Section */
 #pic-of-the-day-container {
     padding: 2rem 1.2rem 3rem;
     background-color: var(--secondary-body);
 }
-
+/* APOD Card Styles */
 .apod-card {
     max-width: 900px;
     margin: 0 auto;
@@ -206,156 +264,106 @@ footer {
     box-shadow: 0 0 20px rgba(0, 229, 255, 0.2);
     position: relative;
 }
+    /* APOD Title */
+    .apod-card h2 {
+        margin-bottom: 0.25rem;
+    }
+    /* APOD Date */
+    .apod-date {
+        margin-bottom: 1rem;
+        opacity: 0.8;
+    }
+    /* APOD Image or Video container */
+    .apod-media {
+        display: block;
+        width: 100%;
+        height: auto;
+        border-radius: 6px;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        margin: 0 auto 1rem auto;
+        max-width: 600px;
+    }
+    /* APOD Explanation */
+    .apod-explanation {
+        line-height: 1.6;
+        margin-bottom: 1rem;
+    }
+    /* APOD Metadata, other information */
+    .apod-meta {
+        font-size: 0.8rem;
+        opacity: 0.85;
+        line-height: 1.4;
+        margin-bottom: 1rem;
+    }
+    /* APOD Metadata Links */
+    .apod-meta-link {
+        color: var(--accent);
+        text-decoration: none;
+        display: inline-block;
+        margin-bottom: 0.25rem;
+    }
+        /* On hover or focus, APOD metadata links will be underlined for better interactivity */
+        .apod-meta-link:hover,
+        .apod-meta-link:focus-visible {
+            text-decoration: underline;
+        }
 
-.apod-card h2 {
-    margin-bottom: 0.25rem;
-}
-
-.apod-date {
-    margin-bottom: 1rem;
-    opacity: 0.8;
-}
-
-.apod-media {
-    display: block;
-    width: 100%;
-    height: auto;
-    border-radius: 6px;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    margin: 0 auto 1rem auto;
-    max-width: 600px;
-
-}
-
-.apod-explanation {
-    line-height: 1.6;
-    margin-bottom: 1rem;
-}
-
-.apod-meta {
-    font-size: 0.8rem;
-    opacity: 0.85;
-    line-height: 1.4;
-    margin-bottom: 1rem;
-}
-
-.apod-meta-link {
-    color: var(--accent);
-    text-decoration: none;
-    display: inline-block;
-    margin-bottom: 0.25rem;
-}
-
-.apod-meta-link:hover,
-.apod-meta-link:focus-visible {
-    text-decoration: underline;
-}
-
+/* Welcome Modal Styles */
 #welcome-modal-container {
-    border: none;
-    padding: 0;
-    background: transparent;
+    border: none; /* Remove default border for better appearance */
+    padding: 0; /* Remove default padding to allow custom styling */
+    background: transparent; /* Ensure the backdrop styles are visible */
     color: var(--text);
-    margin: auto;
+    margin: auto; /* Center the modal in the viewport */
 }
-
+/* Style the backdrop of the welcome modal with a semi-transparent dark background and a slight blur effect */
 #welcome-modal-container::backdrop {
     background: rgba(0, 0, 0, 0.7);
     backdrop-filter: blur(2px);
 }
-
-.welcome-modal {
-    background: linear-gradient(135deg, rgba(6, 16, 30, 0.98), rgba(0, 0, 0, 0.95));
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: 12px;
-    box-shadow: 0 0 40px rgba(0, 229, 255, 0.25);
-    padding: 1.5rem;
-    max-width: 420px;
-    width: min(90vw, 420px);
-    animation: welcome-pop 1s ease-out;
-}
-
-@keyframes welcome-pop {
-    0% {
-        opacity: 0;
-        transform: translateY(6px) scale(0.75);
+    /* The welcome modal itself, styled with a gradient background, border, shadow, and padding for content */
+    .welcome-modal {
+        background: linear-gradient(135deg, rgba(6, 16, 30, 0.98), rgba(0, 0, 0, 0.95));
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 12px;
+        box-shadow: 0 0 40px rgba(0, 229, 255, 0.25);
+        padding: 1.5rem;
+        max-width: 420px;
+        width: min(90vw, 420px); /* Responsive width. This means the modal will take up 90% of the viewport width but not exceed 420px */
+        animation: welcome-pop 1s ease-out;
     }
-
-    100% {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-    }
-}
-
-.welcome-modal h2 {
-    margin-bottom: 0.75rem;
-    color: var(--accent);
-}
-
-.welcome-modal p {
-    margin-bottom: 0.6rem;
-    opacity: 0.9;
-    line-height: 1.5;
-}
-
-.welcome-close {
-    margin-top: 0.5rem;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    background: rgba(0, 0, 0, 0.4);
-    color: var(--text);
-    padding: 0.5rem 1.1rem;
-    border-radius: 999px;
-    cursor: pointer;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-.welcome-close:hover,
-.welcome-close:focus-visible {
-    transform: translateY(-1px);
-    box-shadow: 0 0 12px rgba(255, 174, 0, 0.4);
-}
-
-.star {
-    position: absolute;
-    background-color: rgba(255, 255, 255, 0.521);
-    border-radius: 50%;
-    z-index: -1;
-    animation: twinkle 5s infinite;
-}
-
-@keyframes twinkle {
-
-    0%,
-    100% {
-        opacity: 0.5;
-    }
-
-    50% {
-        opacity: 1;
-    }
-}
-
-
-@media screen and (max-width: 768px) {
-    h1 {
-        font-size: 1.5rem;
-    }
-
-    #viewport {
-        height: 60vh;
-    }
-
-    header img {
-        width: 60px;
-        height: 60px;
-    }
-}
+    /* Welcome modal heading and paragraph styles for better readability and visual hierarchy */
+        .welcome-modal h2 {
+            margin-bottom: 0.75rem;
+            color: var(--accent);
+        }
+        .welcome-modal p {
+            margin-bottom: 0.6rem;
+            opacity: 0.9;
+            line-height: 1.5;
+        }
+        /* The close button for the welcome modal, styled as a pill-shaped button with hover effects for better interactivity */
+        .welcome-close {
+            margin-top: 0.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: rgba(0, 0, 0, 0.4);
+            color: var(--text);
+            padding: 0.5rem 1.1rem;
+            border-radius: 999px;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+            .welcome-close:hover,
+            .welcome-close:focus-visible {
+                transform: translateY(-1px);
+                box-shadow: 0 0 12px rgba(255, 174, 0, 0.4);
+            }
 
 
 
-/**************************************
- * Planet Detail Page Styles
- **************************************/
+/***************************************************************************************************************/
+/* Planet Detail Page Styles ***********************************************************************************/
+/* *************************************************************************************************************/
 #planet-hero {
     position: relative;
     width: 100%;
@@ -363,45 +371,47 @@ footer {
     max-height: 500px;
     margin: 0 auto;
     overflow: hidden;
-    display: block;
 }
+    /* The hero image of the planet, styled to cover the hero section with a darkened filter for better text contrast */
+    #planet-hero img {
+        position: absolute;
+        top: 0%;
+        left: 50%;
+        width: 100%;
+        max-width: 820px;
+        height: 100%;
+        transform: translate(-50%, 0%);
+        object-fit: cover;
+        filter: brightness(0.75) drop-shadow(0 0 20px rgba(255, 255, 255, 0.5));
+        padding: 0 1rem;
+    }
+    /* Special styling for Saturn's hero image to ensure the rings are fully visible and not cropped */
+    #planet-hero.planet-hero-saturn img {
+        width: 70%;
+        object-fit: contain;
+    }
+    /* The heading text overlaid on the hero image, centered both horizontally and vertically with a text shadow for better visibility */
+    #planet-hero h1 {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        color: var(--text);
+        text-shadow: 0 0 40px var(--space);
+        font-size: 2.5rem;
+        z-index: 1;
+    }
 
-#planet-hero img {
-    position: absolute;
-    top: 0%;
-    left: 50%;
-    width: 100%;
-    max-width: 820px;
-    height: 100%;
-    transform: translate(-50%, 0%);
-    object-fit: cover;
-    filter: brightness(0.75) drop-shadow(0 0 20px rgba(255, 255, 255, 0.5));
-    padding: 0 1rem;
-}
-
-#planet-hero.planet-hero-saturn img {
-    width: 70%;
-    object-fit: contain;
-}
-
-#planet-hero h1 {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    color: var(--text);
-    text-shadow: 0 0 40px var(--space);
-    font-size: 2.5rem;
-    z-index: 1;
-}
-
-
-
+/* The body of the planet information section, styled with a background color and padding for better readability */
 #planet-info-body {
-    display: block;
     background-color: var(--primary);
 }
+.planetary-heading {
+    padding: 2rem 1.2rem 0 1.2rem;
+    color: var(--text);
+}
 
+/* Container for the planet data cards, using flexbox to layout the cards with wrapping and spacing */
 #planet-data-container {
     display: flex;
     flex-wrap: wrap;
@@ -410,59 +420,28 @@ footer {
     justify-content: space-evenly;
     align-items: center;
 }
+    /* Individual planet data cards, styled with a background color, border, shadow, and padding for content */
+    .planet-data-card {
+        background-color: var(--data-card);
+        box-shadow: 1px 1px 10px var(--data-card-glow);
+        border-radius: 0.5rem;
+        padding: 1rem;
+        width: 300px;
+        text-align: left;
+        line-height: 1.4;
+    }
+        /* Heading, span, and paragraph styles within the planet data cards for better readability and visual hierarchy */
+        .planet-data-card h2 {
+            margin-bottom: 0.5rem;
+        }
+        .planet-data-card span {
+            color: var(--accent);
+        }
+        .planet-data-card p {
+            margin-bottom: 0.5rem;
+        }
 
-.planet-data-card {
-    background-color: var(--data-card);
-    box-shadow: 1px 1px 10px var(--data-card-glow);
-    border-radius: 0.5rem;
-    padding: 1rem;
-    width: 300px;
-    text-align: left;
-    line-height: 1.4;
-}
-
-.planet-data-card h2 {
-    margin-bottom: 0.5rem;
-}
-
-.planet-data-card span {
-    color: var(--accent);
-}
-
-.planet-data-card p {
-    margin-bottom: 0.5rem;
-}
-
-
-
-#planet-images {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    background-color: var(--secondary-body);
-    padding: 3rem 1rem;
-}
-
-.planet-image-card {
-    background-color: var(--primary);
-    border: 1px solid rgba(119, 119, 119, 0.4);
-    border-radius: 5px;
-    overflow: hidden;
-    position: relative;
-}
-
-.planet-image-card img {
-    display: block;
-    width: 100%;
-    height: 220px;
-    object-fit: cover;
-}
-
-.planet-image-card figcaption {
-    padding: 0.75rem 1rem 1rem;
-    font-size: 0.9rem;
-    line-height: 1.4;
-}
-
+/* The section for the planet description, styled with padding, line height, font size, and a max width for better readability */
 #planet-description {
     padding: 0 1.2rem;
     line-height: 1.6;
@@ -471,162 +450,152 @@ footer {
     margin: 0 auto;
 }
 
-.planetary-heading {
-    padding: 2rem 1.2rem 0 1.2rem;
-    color: var(--text);
+/* The section for displaying images related to the planet, using a CSS grid layout for responsive design */
+#planet-images {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    background-color: var(--secondary-body);
+    padding: 3rem 1rem;
 }
+    /* Individual planet image cards, styled with a background color, border, shadow, and padding for content */
+    .planet-image-card {
+        background-color: var(--primary);
+        border: 1px solid rgba(119, 119, 119, 0.4);
+        border-radius: 5px;
+        overflow: hidden;
+        position: relative;
+    }
+        /* The image within the planet image card, styled to cover the card area with object-fit for better presentation */
+        .planet-image-card img {
+            display: block;
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+        }
+        /* The figcaption within the planet image card, styled for better readability and visual hierarchy */
+        .planet-image-card figcaption {
+            padding: 0.75rem 1rem 1rem;
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+        /* The Favorite button within the planet image card, styled as an absolute positioned button in the top-right corner with hover effects for better interactivity */
+        .favorite-button {
+            position: absolute;
+            top: 0.5rem;
+            right: 0.5rem;
+            width: 2rem;
+            height: 2rem;
+            border: none;
+            background: none;
+            color: var(--accent);
+            font-size: 1.8rem;
+            cursor: pointer;
+            transition: transform 0.2s ease, background 0.2s ease, color 0.2s ease;
+        }
+            /* On hover or focus, the favorite button will scale up slightly for better interactivity */
+            .favorite-button:hover,
+            .favorite-button:focus-visible {
+                transform: scale(1.1);
+            }
+            /* When the favorite button has the "is-favorited" class, it will change color to indicate it has been favorited */
+            .favorite-button.is-favorited {
+                color: var(--data-card-glow);
+                transition: all 0.2s ease;
+            }
 
-
-.favorite-button {
-    position: absolute;
-    top: 0.5rem;
-    right: 0.5rem;
-    width: 2rem;
-    height: 2rem;
-    border: none;
-    background: none;
-    color: var(--accent);
-    font-size: 1.8rem;
-    cursor: pointer;
-    transition: transform 0.2s ease, background 0.2s ease, color 0.2s ease;
-}
-
-.favorite-button:hover,
-.favorite-button:focus-visible {
-    transform: scale(1.05);
-}
-
-.favorite-button.is-favorited {
-    color: var(--data-card-glow);
-    transition: all 0.2s ease;
-}
-
+/* The section for displaying the user's favorite images, styled with padding and a background color for better presentation */
 #favorite-images {
     padding: 2rem 1.2rem 3rem;
     background-color: var(--secondary-body);
 }
-
-#favorite-images .main-heading {
-    max-width: 1200px;
-}
-
-#favorites-gallery {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    width: 100%;
-    max-width: 1200px;
-    margin: 0 auto;
-    align-items: start;
-    justify-content: center;
-    justify-items: center;
-}
-
-.favorite-card {
-    background-color: var(--data-card);
-    border: 1px solid rgba(119, 119, 119, 0.4);
-    border-radius: 6px;
-    overflow: hidden;
-    position: relative;
-    width: 100%;
-    height: fit-content;
-    max-width: 400px;
-}
-
-.favorite-card img {
-    width: 100%;
-    height: 200px;
-    object-fit: cover;
-    display: block;
-}
-
-.favorite-card figcaption {
-    padding: 0.75rem 1rem 1rem;
-    font-size: 0.9rem;
-    line-height: 1.4;
-}
-
-.favorite-title {
-    font-weight: 700;
-    margin-bottom: 0.25rem;
-}
-
-.favorite-meta {
-    opacity: 0.85;
-}
-
-.favorite-meta-link {
-    color: var(--accent);
-    text-decoration: none;
-    display: block;
-    margin-top: 0.15rem;
-    overflow-wrap: anywhere;
-    word-break: break-word;
-}
-
-.favorite-meta-link:hover,
-.favorite-meta-link:focus-visible {
-    text-decoration: underline;
-}
-
-footer {
-    margin-top: 3rem;
-    display: flex;
-    justify-content: space-evenly;
-    align-items: center;
-}
-
-.credentials strong {
-    display: block;
-    margin-top: 1rem;
-}
-
-.credentials ul {
-    list-style: none;
-}
-
-.credentials a {
-    margin-left: 10px;
-}
+    /* The main heading for the favorite images section, styled with a max width to prevent it from stretching too wide on larger screens */
+    #favorite-images .main-heading {
+        max-width: 1200px;
+    }
+    /* The gallery for the favorite images, using a CSS grid layout for responsive design and spacing */
+    #favorites-gallery {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        width: 100%;
+        max-width: 1200px;
+        margin: 0 auto;
+        align-items: start;
+        justify-content: center;
+        justify-items: center;
+    }
+        /* Individual favorite image cards, styled with a background color, border, shadow, and padding for content */
+        .favorite-card {
+            background-color: var(--data-card);
+            border: 1px solid rgba(119, 119, 119, 0.4);
+            border-radius: 6px;
+            overflow: hidden;
+            position: relative;
+            width: 100%;
+            height: fit-content;
+            max-width: 400px;
+        }
+            /* The image within the favorite card, styled to cover the card area with object-fit for better presentation */
+            .favorite-card img {
+                width: 100%;
+                height: 200px;
+                object-fit: cover;
+                display: block;
+            }
+            /* The figcaption within the favorite card, styled for better readability and visual hierarchy */
+            .favorite-card figcaption {
+                padding: 0.75rem 1rem 1rem;
+                font-size: 0.9rem;
+                line-height: 1.4;
+            }
+            /* The title, metadata, and link styles within the favorite card for better readability and interactivity */
+            .favorite-title {
+                font-weight: 700;
+                margin-bottom: 0.25rem;
+            }
+            /* The metadata for the favorite image, styled with a slightly lower opacity for better visual hierarchy */
+            .favorite-meta {
+                opacity: 0.85;
+            }
+            /* The link within the favorite card, styled with the accent color and hover effects for better interactivity */
+            .favorite-meta-link {
+                color: var(--accent);
+                text-decoration: none;
+                display: block;
+                margin-top: 0.15rem;
+                overflow-wrap: anywhere;
+                word-break: break-word;
+            }
+            /* On hover or focus, the favorite metadata links will be underlined for better interactivity */
+            .favorite-meta-link:hover,
+            .favorite-meta-link:focus-visible {
+                text-decoration: underline;
+            }
 
 
-.media-bar {
-    display: flex;
-    gap: 2rem;
-}
-
-.media-bar a {
-    text-decoration: none;
-}
-
-.media-bar img {
-    width: 35px;
-    height: 35px;
-}
-
-
-#last-modified,
-#current-year {
-    color: var(--accent)
-}
-
-.project-link {
-    color: var(--accent);
-    text-decoration: none;
-    font-size: 0.9rem;
-    display: block;
-    margin-top: 0.5rem;
-}
-
-.project-link:hover,
-.project-link:focus-visible {
-    text-decoration: underline;
-}
-
+            
+/* *************************************************************************************************************/
+/* Mobile Styles ***********************************************************************************************/
+/* *************************************************************************************************************/
 @media screen and (max-width: 900px) {
     footer {
         flex-direction: column;
         gap: 2rem;
         font-size: 0.8rem;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    h1 {
+        font-size: 1.5rem;
+    }
+
+    #solsystem-container {
+        height: 60vh;
+    }
+
+    header img {
+        width: 60px;
+        height: 60px;
     }
 }
 

@@ -2,55 +2,90 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <base href="./" />
-    <meta name="description" content="Interactive solar system explorer with real astronomical data." />
-    <title>SolarSys Explorer</title>
-    <link rel="stylesheet" href="css/styles.css" />
-    <link rel="stylesheet" href="css/animations.css" />
+    <base href="./"> <!-- This base tag ensures that all relative URLs are resolved from the root of the project, which is important since this page is in a subdirectory. -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home | SolarSys Explorer</title>
+    <meta name="description" content="Interactive solar system explorer with real astronomical data from NASA and API Ninjas.">
+    <meta name="keywords" content="solar system, planets, NASA, astronomy, space exploration, interactive visualization">
+    <meta name="author" content="Marco Sandoval">
+
+    <!-- Facebook Meta Tags -->
+    <meta property="og:title" content="Home | SolarSys Explorer">
+    <meta property="og:description" content="Interactive solar system explorer with real astronomical data from NASA and API Ninjas.">
+    <meta property="og:image" content="https://macsandoval1999.github.io/solarsys-expedition/assets/logos/preview.jpg">
+    <meta property="og:url" content="https://macsandoval1999.github.io/solarsys-expedition/index.html">
+    <meta property="og:type" content="website">
+    
+    <!-- Instagram Meta Tags -->
+    <meta name="instagram:title" content="Home | SolarSys Explorer">
+    <meta name="instagram:description" content="Interactive solar system explorer with real astronomical data from NASA and API Ninjas.">
+    <meta name="instagram:image" content="https://macsandoval1999.github.io/solarsys-expedition/assets/logos/preview.jpg">
+    <meta name="instagram:url" content="https://macsandoval1999.github.io/solarsys-expedition/index.html">
+    <meta name="instagram:type" content="website">
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/animations.css">
+
+    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+
+    <!-- Scripts -->
     <script type="module" src="js/main.js"></script>
     <script src="js/cameraController.mjs" defer></script>
+
+    <!-- Favicon -->
+    <link rel="icon" href="assets/logos/favicon.ico" type="image/x-icon">
 </head>
 
+
+
 <body>
+    <!-- Header is dynamically loaded -->
     <header id="main-header"></header>
 
     <main>
+        <!-- Intro and instructions for exploring the solar system -->
         <div class="intro">
             <h2>The Cosmic Frontier</h2>
             <p class="instructions">Use your mouse or touch gestures to explore the solar system.</p>
         </div>
 
-        <div id="viewport" aria-label="Solar system visualization">
-            <div id="solar-system">
-                <div id="sun">
+        <!-- Solar system Container -->
+        <div id="solsystem-container" aria-label="Solar system visualization">
+            <div id="solar-system"> <!-- The solar system visualization will be rendered here by the cameraController module. -->
+                <div id="sun"> <!-- The Sun element -->
                     <picture>
-                        <source srcset="assets/planet-images/sun-med.webp" type="image/webp">
-                        <img src="assets/planet-images/sun-med.webp" alt="Sun" draggable="false">
+                        <source media="(min-width: 600px)" srcset="assets/planet-images/sun-med.webp" width="200" height="200" type="image/webp">
+                        <img src="assets/planet-images/sun-small.webp" alt="Sun" width="100" height="100" draggable="false" loading="lazy"> <!--draggable=false solves a bug I had. When we scrolled the solar system, the Sun would move unexpectedly. This removes that issue by preventing the image from being dragged. -->
                     </picture>
                 </div>
+                <!-- Planet elements will be dynamically added here by the main module after fetching data from the Ninja Planets API. -->
             </div>
         </div>
 
         <div class="divider"></div>
 
+        <!-- NASA Picture of the Day Section -->
         <section id="pic-of-the-day-container">
             <h2 class="heading-font main-heading">NASA Picture of the Day</h2>
-            <div id="pic-of-the-day-content"></div>
+            <div id="pic-of-the-day-content"></div> <!-- The content for the NASA Picture of the Day will be dynamically loaded here. -->
         </section>
 
+        <!-- Favorite Images Section -->
         <div id="favorite-images">
             <h2 class="heading-font main-heading">Your Favorite Space Images</h2>
-            <div id="favorites-gallery"></div>
+            <div id="favorites-gallery"></div> <!-- The content for your favorite space images will be dynamically loaded here. -->
         </div>
 
-        <dialog id="welcome-modal-container"></dialog>
+        <!-- Welcome Modal -->
+        <dialog id="welcome-modal-container"></dialog> <!-- The welcome modal will be dynamically loaded here. -->
     </main>
 
+    <!-- Footer is dynamically loaded -->
     <footer id="main-footer"></footer>
 </body>
 

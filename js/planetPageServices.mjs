@@ -22,11 +22,11 @@ import {
     formatTemperature,
     getPlanetData,
     getPlanetImages,
-    loadPlanetsConfig,
     resolveAssetPath,
     selectRandomItems,
     toTitleCase,
 } from "./dataStuff.mjs";
+import { loadPlanetsConfig } from "./solarSystem.mjs";
 
 const RESOURCE_FAVORITES_KEY = "favoriteResources";
 

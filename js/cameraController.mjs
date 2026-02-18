@@ -4,17 +4,17 @@ const camera = {
     scale: 1
 };
 
-const MIN_SCALE = 0.4;
+const MIN_SCALE = 0.1;
 const MAX_SCALE = 3;
 const FLY_IN_SCALE = 6;
 const FLY_IN_VERTICAL_OFFSET = 120; // pixels to nudge planet toward vertical center
 
-const viewport = document.getElementById("viewport");
+const solsystemContainer = document.getElementById("solsystem-container");
 const solarWorld = document.getElementById("solar-system");
 let isFlying = false;
 
-if (!viewport || !solarWorld) {
-    console.warn("Camera controller: missing #viewport or #solar-system");
+if (!solsystemContainer || !solarWorld) {
+    console.warn("Camera controller: missing #solsystem-container or #solar-system");
 }
 
 solarWorld?.addEventListener("click", (event) => {
@@ -29,7 +29,7 @@ let isDragging = false;
 let lastX = 0;
 let lastY = 0;
 
-viewport?.addEventListener("mousedown", (e) => {
+solsystemContainer?.addEventListener("mousedown", (e) => {
     if (isFlying) return;
     if (e.target.closest(".planet")) {
         return;
@@ -39,7 +39,7 @@ viewport?.addEventListener("mousedown", (e) => {
     lastY = e.clientY;
 });
 
-viewport?.addEventListener("dragstart", (e) => {
+solsystemContainer?.addEventListener("dragstart", (e) => {
     e.preventDefault();
 });
 
@@ -61,7 +61,7 @@ window.addEventListener("mousemove", (e) => {
 });
 
 
-viewport?.addEventListener(
+solsystemContainer?.addEventListener(
     "wheel",
     (e) => {
         if (isFlying) return;
@@ -80,7 +80,7 @@ let lastTouchX = 0;
 let lastTouchY = 0;
 let lastPinchDistance = 0;
 
-viewport?.addEventListener(
+solsystemContainer?.addEventListener(
     "touchstart",
     (e) => {
         if (isFlying) return;
@@ -97,7 +97,7 @@ viewport?.addEventListener(
     { passive: false }
 );
 
-viewport?.addEventListener(
+solsystemContainer?.addEventListener(
     "touchmove",
     (e) => {
         if (isFlying) return;
@@ -122,7 +122,7 @@ viewport?.addEventListener(
     { passive: false }
 );
 
-viewport?.addEventListener(
+solsystemContainer?.addEventListener(
     "touchend",
     (e) => {
         if (isFlying) return;
@@ -152,15 +152,15 @@ function getTouchDistance(t1, t2) {
 
 
 function focusOnPlanet(planetEl) {
-    if (!solarWorld || !viewport) return;
+    if (!solarWorld || !solsystemContainer) return;
     const planetName = planetEl.dataset.name;
     if (!planetName) return;
     const rect = planetEl.getBoundingClientRect();
     const planetScreenX = rect.left + rect.width / 2;
     const planetScreenY = rect.top + rect.height / 2;
-    const viewportRect = viewport.getBoundingClientRect();
-    const baseX = viewportRect.left + viewportRect.width / 2;
-    const baseY = viewportRect.top + viewportRect.height / 2;
+    const solsystemContainerRect = solsystemContainer.getBoundingClientRect();
+    const baseX = solsystemContainerRect.left + solsystemContainerRect.width / 2;
+    const baseY = solsystemContainerRect.top + solsystemContainerRect.height / 2;
     const originX = solarWorld.offsetWidth / 2;
     const originY = solarWorld.offsetHeight / 2;
     const currentScale = camera.scale;
@@ -170,12 +170,12 @@ function focusOnPlanet(planetEl) {
 
     planetEl.classList.add("is-target");
     solarWorld.classList.add("is-flying");
-    viewport.classList.add("is-flying");
+    solsystemContainer.classList.add("is-flying");
     isFlying = true;
 
     camera.x = -(targetScale * (planetWorldX - originX) + originX);
     // Nudge the final camera Y a bit further up so the clicked
-    // planet appears closer to the vertical center of the viewport.
+    // planet appears closer to the vertical center of the solsystem-container.
     camera.y = -(targetScale * (planetWorldY - originY) + originY) - FLY_IN_VERTICAL_OFFSET;
     camera.scale = targetScale;
 

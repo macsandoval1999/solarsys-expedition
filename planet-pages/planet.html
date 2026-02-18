@@ -2,35 +2,68 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <base href="../" />
-    <title>Planet Details</title>
-    <link rel="stylesheet" href="css/styles.css" />
+    <base href="../">
+    <meta charset="UTF-8" >
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Planet Details | SolarSys Explorer</title>
+    <meta name="description" content="Detailed information about planets in our solar system, including data and images from NASA and API Ninjas.">
+    <meta name="keywords" content="planet details, solar system, NASA, API Ninjas, astronomy, space exploration">
+    <meta name="author" content="Marco Sandoval">
+
+    <!-- Facebook Meta Tags -->
+    <meta property="og:title" content="Planet Details | SolarSys Explorer">
+    <meta property="og:description" content="Detailed information about planets in our solar system, including data and images from NASA and API Ninjas.">
+    <meta property="og:image" content="https://macsandoval1999.github.io/solarsys-expedition/assets/logos/preview.jpg">
+    <meta property="og:url" content="https://macsandoval1999.github.io/solarsys-expedition/planet-pages/planet.html">
+    <meta property="og:type" content="website">
+    
+    <!-- Instagram Meta Tags -->
+    <meta name="instagram:title" content="Planet Details | SolarSys Explorer">
+    <meta name="instagram:description" content="Detailed information about planets in our solar system, including data and images from NASA and API Ninjas.">
+    <meta name="instagram:image" content="https://macsandoval1999.github.io/solarsys-expedition/assets/logos/preview.jpg">
+    <meta name="instagram:url" content="https://macsandoval1999.github.io/solarsys-expedition/planet-pages/planet.html">
+    <meta name="instagram:type" content="website">
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/animations.css">
+
+    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono&family=Share+Tech+Mono&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    
+    <!-- Scripts -->
     <script src="js/planetPage.js" type="module"></script>
+
+    <!-- Favicon -->
+    <link rel="icon" href="assets/logos/favicon.ico" type="image/x-icon">
 </head>
 
+
+
 <body>
+
     <header id="main-header"></header>
+    
     <main>
+
+        <!-- Planet Hero Section -->
         <section id="planet-hero" class="heading-font">
-            <h1 id="planet-name"></h1>
+            <h1 id="planet-name"></h1> <!-- The planet name will be dynamically loaded here. -->
             <picture>
+                <!-- The planet image will be dynamically loaded here. -->
                 <source id="planet-image-webp" srcset="" type="image/webp">
                 <img id="planet-image" src="" alt="Planet Image" draggable="false">
             </picture>
         </section>
 
+        <!-- Planet Information Body -->
         <div id="planet-info-body">
-
-
             <h2 class="heading-font planetary-heading">Planetary Data</h2>
+            <!-- The planetary data will be dynamically loaded here. Span elements will be used to display individual data points. -->
             <section id="planet-data-container">
-                <div class="planet-data-card" id="planet-size">
+                <div class="planet-data-card" id="planet-size"> 
                     <h2 class="heading-font">Size</h2>
                     <p><strong>Mass: <br><span id="planet-mass"></span></strong></p>
                     <p><strong>Avg. Radius: <br><span id="planet-radius"></span></strong></p>
@@ -48,13 +81,17 @@
                     <p><strong>Avg. Surface Temperature: <br><span id="planet-temperature"></span></strong></p>
                 </div>
             </section>
+
+            <!-- Planet Overview Section -->
             <h2 class="heading-font planetary-heading">Overview</h2>
             <section id="planet-description">
-                <p id="planet-full-description"></p>
+                <p id="planet-full-description"></p> <!-- The planet overview will be dynamically loaded here. -->
+
             </section>
 
+            <!-- Planet Gallery Section -->
             <h2 class="heading-font planetary-heading">Gallery</h2>
-            <section id="planet-images"></section>
+            <section id="planet-images"></section> <!-- The planet images will be dynamically loaded here. -->
 
         </div>
     </main>
