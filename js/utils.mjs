@@ -1,14 +1,14 @@
+/* This module contains utility functions for the solar system explorer website. It includes functions for creating a starry background, managing localStorage for favorites, rendering templates, and loading mutual components like the header and footer. These utilities help to create a dynamic and interactive user experience on the website. */
+
+
+
 export function createStars()
 /* This function creates a dynamic starry background effect by adding star elements to the body of the webpage. 
 It works by creating a large number of div elements with the class "star" and randomly positioning them within the viewport. Each star is given a random size and animation duration to create a twinkling effect. */ {
     const universe = document.querySelector("body");
     if (!universe) return;
 
-    const docHeight = Math.max(
-        document.documentElement.scrollHeight,
-        document.body.scrollHeight,
-        window.innerHeight
-    );
+    const docHeight = Math.max(document.documentElement.scrollHeight, document.body.scrollHeight, window.innerHeight);
 
     for (let i = 0; i < 1000; i++) {
         const star = document.createElement("div");
@@ -75,7 +75,7 @@ export function toggleFavoriteByKey(storageKey, item)
 
 export function isFavoriteByKey(storageKey, id)
 /* This function checks if a favorite item exists in localStorage for the given key. It returns true if the item is found, or false otherwise. */ {
-    return loadFavoritesByKey(storageKey).some((favorite) => favorite.id === id);
+    return loadFavoritesByKey(storageKey).some((favorite) => favorite.id === id); // Check if any favorite item in the array has an id that matches the given id.
 }
 
 

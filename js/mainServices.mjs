@@ -1,31 +1,25 @@
+/* This module contains the main services and functions for initializing the home page, handling page show events, loading the NASA Picture of the Day (APOD), showing the welcome dialog, managing visitor state, and rendering the favorite gallery. It imports necessary functions from other modules to perform these tasks. The main functions include initHomePage, handlePageShow, handleApodFavoriteUpdated, loadPicOfTheDay, showWelcomeDialog, getVisitorState, setVisitorState, and renderFavoriteGallery. These functions work together to create an interactive and personalized experience for users visiting the solar system explorer website. */
+
+
+
 import { initSolarSystem } from "./solarSystem.mjs";
-import {
-    isFavoriteByKey,
-    getLocalStorage,
-    loadFavoritesByKey,
-    loadPageMutuals,
-    setLocalStorage,
-    toggleFavoriteByKey,
-} from "./utils.mjs";
-import {
-    buildFavoriteCard,
-    createApodCard,
-    createFavoriteToggle,
-} from "./cardBuilder.mjs";
-import {
-    buildApodArchiveUrl,
-    buildApodFavorite,
-    getApodData,
-    preloadNinjaPlanetsData,
-} from "./dataStuff.mjs";
+import { isFavoriteByKey, getLocalStorage, loadFavoritesByKey, loadPageMutuals, setLocalStorage, toggleFavoriteByKey } from "./utils.mjs";
+import { buildFavoriteCard, createApodCard, createFavoriteToggle } from "./cardBuilder.mjs";
+import { buildApodArchiveUrl, buildApodFavorite, getApodData, preloadNinjaPlanetsData } from "./dataStuff.mjs";
+
+
 
 const RESOURCE_FAVORITES_KEY = "favoriteResources";
 const APOD_FAVORITES_KEY = "favoriteApods";
 const APOD_META_URL = "https://apod.nasa.gov/apod/astropix.html";
+
 const VISITOR_STORAGE_KEY = "visitorState";
 const SESSION_WELCOME_KEY = "welcomeShown";
 
-export function initHomePage() {
+
+
+export function initHomePage()
+/* Calls all the necessary functions to initialize the home page of the solar system explorer.*/ {
     initSolarSystem();
     loadPageMutuals();
     preloadNinjaPlanetsData();
@@ -33,17 +27,26 @@ export function initHomePage() {
     renderFavoriteGallery();
 }
 
-export function handlePageShow(event) {
+
+
+export function handlePageShow(event)
+/* When back/forward navigation occurs, I found that the fly-in animation got stuck and because of other settings, we couldnt interact with the page unless we refreshed. This solves it by reloading a page if it was loaded from the bfcache (back-forward cache) which is what happens when navigating with the back and forward buttons. This way, we ensure that the page is in a fresh state and the animations work correctly when the user navigates back to it. */ {
     if (event.persisted) {
         window.location.reload();
     }
 }
 
-export function handleApodFavoriteUpdated() {
+
+
+export function handleApodFavoriteUpdated()
+/* Used to renderfavorite gallery again when apod favorites is updated. I could just use the original renderFavoriteGallery function, but I thought it would be better to have a separate function that is specifically for handling the APOD favorite updates, in case we want to add any additional logic or functionality in the future related to APOD favorites. This way, we keep the code organized and maintainable. */ {
     renderFavoriteGallery();
 }
 
-async function loadPicOfTheDay() {
+
+
+async function loadPicOfTheDay()
+/* This function loads the NASA Picture of the Day (APOD) and displays it on the page. It fetches the APOD data, builds the caption and favorite button, creates the card element for the APOD, and appends it to the container. If there is an error during this process, it logs the error and displays a message indicating that the APOD could not be loaded. */ {
     const container = document.getElementById("pic-of-the-day-content");
     if (!container) return;
     container.textContent = "";
@@ -57,15 +60,7 @@ async function loadPicOfTheDay() {
         const mediaUrl = apod?.url ?? "";
         const thumbnailUrl = apod?.thumbnail_url ?? "";
         const archiveUrl = buildApodArchiveUrl(date);
-        const favoriteItem = buildApodFavorite(
-            apod,
-            title,
-            date,
-            mediaType,
-            mediaUrl,
-            thumbnailUrl,
-            archiveUrl
-        );
+        const favoriteItem = buildApodFavorite(apod, title, date, mediaType, mediaUrl, thumbnailUrl, archiveUrl);
 
         const favoriteButton = createFavoriteToggle(favoriteItem, {
             isFavorite: isFavoriteByKey(APOD_FAVORITES_KEY, favoriteItem.id),
@@ -75,16 +70,7 @@ async function loadPicOfTheDay() {
             },
         });
 
-        const card = createApodCard({
-            title,
-            date,
-            explanation,
-            mediaType,
-            mediaUrl,
-            metaUrl: APOD_META_URL,
-            favoriteButton,
-        });
-
+        const card = createApodCard({title, date, explanation, mediaType, mediaUrl, metaUrl: APOD_META_URL, favoriteButton});
         container.appendChild(card);
         showWelcomeDialog(date);
     } catch (error) {
@@ -93,22 +79,29 @@ async function loadPicOfTheDay() {
     }
 }
 
-function showWelcomeDialog(apodDate) {
+
+
+function showWelcomeDialog(apodDate)
+/* This function shows a welcome dialog to the user when they visit the page. It checks if the user is a returning visitor and if there is a new APOD since their last visit, and customizes the welcome message accordingly. The dialog is displayed using a <dialog> element, and it can be closed by clicking a close button or by clicking outside the dialog. The function also updates the visitor state in localStorage to keep track of their last visit date and the last APOD date they saw. */
+{
     const dialog = document.getElementById("welcome-modal-container");
     if (!dialog || typeof dialog.showModal !== "function") return;
 
     const today = new Date().toISOString().slice(0, 10);
-    const normalizedApodDate =
-        typeof apodDate === "string" && /^\d{4}-\d{2}-\d{2}$/.test(apodDate)
-            ? apodDate
-            : "";
+
     const state = getVisitorState();
     const isReturning = Boolean(state.lastVisitDate);
-    const isNewApod = Boolean(
-        apodDate && state.lastApodDate && state.lastApodDate !== apodDate
-    );
+    let isNewApod = false;
 
-    // const titleText = isReturning ? "Welcome back" : "Welcome";
+    if (apodDate && state.lastApodDate && state.lastApodDate !== apodDate)
+    // if these three conditions are met, it means there is a new APOD since the user's last visit:
+        // apodDate is the date of the currently loaded APOD, which we get from the APOD data.
+        // state.lastApodDate is the date of the last APOD that the user saw, which we stored in localStorage during their previous visit.
+        // By comparing these two dates, we can determine if there is a new APOD that the user has not seen before. If they are different, it means there is a new APOD, and we set isNewApod to true to include that information in the welcome message.
+    {
+        isNewApod = true;
+    }
+
     let titleText;
     if (isReturning) {
         titleText = "Welcome back Commander o7";
@@ -123,7 +116,7 @@ function showWelcomeDialog(apodDate) {
     }
 
     if (isNewApod) {
-        welcomeMessage += " Check out the new NASA Picture of the Day.";
+        welcomeMessage += " Check out NASAs new Astronomical Picture of the Day.";
     }
 
     dialog.innerHTML = `
@@ -141,9 +134,7 @@ function showWelcomeDialog(apodDate) {
         });
     }
 
-    dialog.addEventListener(
-        "click",
-        (event) => {
+    dialog.addEventListener("click", (event) => {
             if (event.target === dialog) {
                 dialog.close();
             }
@@ -161,7 +152,11 @@ function showWelcomeDialog(apodDate) {
     });
 }
 
-function getVisitorState() {
+
+
+function getVisitorState()
+/* Get the visitor state from localStorage. This function retrieves the visitor's last visit date and the last APOD date they saw from localStorage. It returns an object containing these two pieces of information. If there is no stored data, it returns default values with empty strings for both dates. This is used for tracking the user's visit history and displaying relevant information in the welcome message. */
+{
     const stored = getLocalStorage(VISITOR_STORAGE_KEY);
     if (stored && typeof stored === "object") {
         return {
@@ -172,11 +167,19 @@ function getVisitorState() {
     return { lastVisitDate: "", lastApodDate: "" };
 }
 
-function setVisitorState(state) {
+
+
+function setVisitorState(state)
+/* Set the visitor state in localStorage. This function takes an object containing the visitor's last visit date and the last APOD date they saw, and stores it in localStorage under the VISITOR_STORAGE_KEY. This allows us to keep track of the user's visit history and the APOD they last saw, which can be used to customize their experience when they return to the site. */
+{
     setLocalStorage(VISITOR_STORAGE_KEY, state);
 }
 
-function renderFavoriteGallery() {
+
+
+function renderFavoriteGallery()
+/* This function renders the favorite gallery on the page. It retrieves the user's favorite NASA images and APODs from localStorage, and creates cards for each of them to display in the gallery. If there are no favorites, it shows a message indicating that there are no favorites yet. The function also sets up the necessary event listeners for the favorite toggle buttons on each card, so that users can easily add or remove items from their favorites directly from the gallery. */
+{
     const gallery = document.getElementById("favorites-gallery");
     if (!gallery) return;
     gallery.textContent = "";
@@ -226,7 +229,7 @@ function renderFavoriteGallery() {
             alt: item?.title ?? "Favorite APOD",
             metaLines,
             linkUrl: item?.archiveUrl,
-            toggleBuilder: (apod) =>
+            toggleBuilder: (apod) => // for APOD favorites, we build the favorite toggle button using the createFavoriteToggle function, passing in the APOD item and configuring it to be a favorite (isFavorite: true) with an onToggle function that will toggle the favorite status in localStorage when clicked. We also specify an onAfterToggle callback to re-render the favorite gallery after toggling, so that the UI updates to reflect the change in favorites.
                 createFavoriteToggle(apod, {
                     isFavorite: true,
                     onToggle: (target) =>
