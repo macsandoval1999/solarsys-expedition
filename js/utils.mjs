@@ -2,19 +2,22 @@
 
 
 
-export function createStars()
+export function createStars(target = document.body)
 /* This function creates a dynamic starry background effect by adding star elements to the body of the webpage. 
 It works by creating a large number of div elements with the class "star" and randomly positioning them within the viewport. Each star is given a random size and animation duration to create a twinkling effect. */ {
-    const universe = document.querySelector("body");
+    const universe = target || document.body;
     if (!universe) return;
 
-    const docHeight = Math.max(document.documentElement.scrollHeight, document.body.scrollHeight, window.innerHeight);
+    universe.querySelectorAll(".star").forEach((star) => star.remove());
+
+    const height = Math.max(universe.scrollHeight, universe.clientHeight, window.innerHeight);
+    const width = Math.max(universe.scrollWidth, universe.clientWidth, window.innerWidth);
 
     for (let i = 0; i < 1000; i++) {
         const star = document.createElement("div");
         star.classList.add("star");
-        star.style.top = `${Math.random() * docHeight}px`;
-        star.style.left = `${Math.random() * 100}%`;
+        star.style.top = `${Math.random() * height}px`;
+        star.style.left = `${Math.random() * width}px`;
         star.style.width = `${Math.random() * 2}px`;
         star.style.height = star.style.width;
         star.style.animationDuration = `${Math.random() * 3 + 2}s`;
@@ -137,6 +140,10 @@ export async function loadPageMutuals()
     renderWithTemplate(headerTemplate, headerElement,);
     renderWithTemplate(footerTemplate, footerElement,);
     createStars();
+    const solarContainer = document.getElementById("solsystem-container");
+    if (solarContainer) {
+        createStars(solarContainer);
+    }
     copyRightDates();
 }
 

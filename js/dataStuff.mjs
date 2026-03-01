@@ -101,16 +101,119 @@ parameters:
 returns: An object representing the favorite item.
 */
 {
-    const imageUrl = mediaType === "video" ? (thumbnailUrl || mediaUrl) : mediaUrl;
+    const resolvedThumbnail = thumbnailUrl || getApodVideoThumbnail(mediaUrl);
+    const imageUrl = mediaType === "video" ? (resolvedThumbnail || buildApodPlaceholder(title)) : mediaUrl;
     const idSource = date || apod?.url || title;
     return {
         id: `apod-${idSource}`,
         title: title ?? "NASA Picture of the Day", // NASA Picture of the Day is the default title if none provided
         date: date ?? "", // blank if none provided
         imageUrl,
+        mediaType,
+        mediaUrl,
+        thumbnailUrl: resolvedThumbnail || "",
         archiveUrl,
         type: "apod",
     };
+}
+
+
+
+export function resolveApodFavoriteImage(item)
+/* This function resolves the best image URL for an APOD favorite card, handling video links and fallbacks. */ {
+    if (!item) return "";
+
+    const directUrl = item.imageUrl ?? "";
+    if (directUrl && !isLikelyVideoUrl(directUrl)) return directUrl;
+
+    const candidateVideoUrl = item.mediaUrl || directUrl;
+    const thumbnailUrl = item.thumbnailUrl || getApodVideoThumbnail(candidateVideoUrl);
+    if (thumbnailUrl) return thumbnailUrl;
+
+    return buildApodPlaceholder(item.title);
+}
+
+
+
+function getApodVideoThumbnail(mediaUrl)
+/* Returns a thumbnail URL for common video hosts like YouTube when possible. */ {
+    const videoId = getYouTubeVideoId(mediaUrl);
+    if (videoId) return `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
+    return "";
+}
+
+
+
+function getYouTubeVideoId(url)
+/* Extracts a YouTube video ID from common URL formats. */ {
+    if (!url) return "";
+    try {
+        const parsed = new URL(url);
+        const host = parsed.hostname.replace("www.", "");
+        if (host === "youtube.com" || host === "m.youtube.com") {
+            const idFromQuery = parsed.searchParams.get("v");
+            if (idFromQuery) return idFromQuery;
+            if (parsed.pathname.startsWith("/embed/")) {
+                return parsed.pathname.replace("/embed/", "").split("/")[0];
+            }
+            if (parsed.pathname.startsWith("/v/")) {
+                return parsed.pathname.replace("/v/", "").split("/")[0];
+            }
+        }
+        if (host === "youtu.be") {
+            return parsed.pathname.replace("/", "");
+        }
+    } catch (error) {
+        return "";
+    }
+    return "";
+}
+
+
+
+function isLikelyVideoUrl(url)
+/* Checks if a URL points to a common video host or file type. */ {
+    if (!url) return false;
+    if (/(youtube\.com|youtu\.be|vimeo\.com)/i.test(url)) return true;
+    return /\.(mp4|webm|ogg)(\?.*)?$/i.test(url);
+}
+
+
+
+function buildApodPlaceholder(title)
+/* Builds a simple inline SVG placeholder for APOD video favorites. */ {
+    const label = (title ?? "APOD video").slice(0, 40);
+        const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="800" height="450" viewBox="0 0 800 450">
+    <defs>
+        <linearGradient id="bg" x1="0" x2="1" y1="0" y2="1">
+            <stop offset="0%" stop-color="#0b0b0b"/>
+            <stop offset="100%" stop-color="#161616"/>
+        </linearGradient>
+        <linearGradient id="panel" x1="0" x2="1" y1="0" y2="0">
+            <stop offset="0%" stop-color="#121212"/>
+            <stop offset="100%" stop-color="#1d1d1d"/>
+        </linearGradient>
+        <radialGradient id="glow" cx="50%" cy="45%" r="40%">
+            <stop offset="0%" stop-color="#f2b632" stop-opacity="0.6"/>
+            <stop offset="100%" stop-color="#f2b632" stop-opacity="0"/>
+        </radialGradient>
+    </defs>
+    <rect width="800" height="450" fill="url(#bg)"/>
+    <circle cx="620" cy="90" r="70" fill="url(#glow)"/>
+    <rect x="36" y="36" width="728" height="378" rx="20" fill="url(#panel)" stroke="#2e2e2e" stroke-width="3"/>
+    <g opacity="0.7">
+        <circle cx="120" cy="100" r="2" fill="#f2f2f2"/>
+        <circle cx="180" cy="160" r="1.5" fill="#f2f2f2"/>
+        <circle cx="260" cy="90" r="1.8" fill="#f2f2f2"/>
+        <circle cx="520" cy="140" r="1.4" fill="#f2f2f2"/>
+        <circle cx="660" cy="200" r="1.6" fill="#f2f2f2"/>
+        <circle cx="700" cy="120" r="1.2" fill="#f2f2f2"/>
+    </g>
+    <circle cx="400" cy="225" r="58" fill="#0f0f0f" stroke="#f2b632" stroke-width="3"/>
+    <polygon points="382,198 382,252 435,225" fill="#f2b632"/>
+    <text x="400" y="340" fill="#f2b632" font-family="Arial, sans-serif" font-size="24" text-anchor="middle">Click the link below to see this video</text>
+</svg>`;
+    return `data:image/svg+xml;utf8,${encodeURIComponent(svg)}`;
 }
 
 

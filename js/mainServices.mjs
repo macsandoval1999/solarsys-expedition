@@ -5,7 +5,7 @@
 import { initSolarSystem } from "./solarSystem.mjs";
 import { isFavoriteByKey, getLocalStorage, loadFavoritesByKey, loadPageMutuals, setLocalStorage, toggleFavoriteByKey } from "./utils.mjs";
 import { buildFavoriteCard, createApodCard, createFavoriteToggle } from "./cardBuilder.mjs";
-import { buildApodArchiveUrl, buildApodFavorite, getApodData, preloadNinjaPlanetsData } from "./dataStuff.mjs";
+import { buildApodArchiveUrl, buildApodFavorite, getApodData, preloadNinjaPlanetsData, resolveApodFavoriteImage } from "./dataStuff.mjs";
 
 
 
@@ -70,7 +70,16 @@ async function loadPicOfTheDay()
             },
         });
 
-        const card = createApodCard({title, date, explanation, mediaType, mediaUrl, metaUrl: APOD_META_URL, favoriteButton});
+        const card = createApodCard({
+            title,
+            date,
+            explanation,
+            mediaType,
+            mediaUrl,
+            thumbnailUrl,
+            metaUrl: APOD_META_URL,
+            favoriteButton,
+        });
         container.appendChild(card);
         showWelcomeDialog(date);
     } catch (error) {
@@ -82,8 +91,7 @@ async function loadPicOfTheDay()
 
 
 function showWelcomeDialog(apodDate)
-/* This function shows a welcome dialog to the user when they visit the page. It checks if the user is a returning visitor and if there is a new APOD since their last visit, and customizes the welcome message accordingly. The dialog is displayed using a <dialog> element, and it can be closed by clicking a close button or by clicking outside the dialog. The function also updates the visitor state in localStorage to keep track of their last visit date and the last APOD date they saw. */
-{
+/* This function shows a welcome dialog to the user when they visit the page. It checks if the user is a returning visitor and if there is a new APOD since their last visit, and customizes the welcome message accordingly. The dialog is displayed using a <dialog> element, and it can be closed by clicking a close button or by clicking outside the dialog. The function also updates the visitor state in localStorage to keep track of their last visit date and the last APOD date they saw. */ {
     const dialog = document.getElementById("welcome-modal-container");
     if (!dialog || typeof dialog.showModal !== "function") return;
 
@@ -95,9 +103,9 @@ function showWelcomeDialog(apodDate)
 
     if (apodDate && state.lastApodDate && state.lastApodDate !== apodDate)
     // if these three conditions are met, it means there is a new APOD since the user's last visit:
-        // apodDate is the date of the currently loaded APOD, which we get from the APOD data.
-        // state.lastApodDate is the date of the last APOD that the user saw, which we stored in localStorage during their previous visit.
-        // By comparing these two dates, we can determine if there is a new APOD that the user has not seen before. If they are different, it means there is a new APOD, and we set isNewApod to true to include that information in the welcome message.
+    // apodDate is the date of the currently loaded APOD, which we get from the APOD data.
+    // state.lastApodDate is the date of the last APOD that the user saw, which we stored in localStorage during their previous visit.
+    // By comparing these two dates, we can determine if there is a new APOD that the user has not seen before. If they are different, it means there is a new APOD, and we set isNewApod to true to include that information in the welcome message.
     {
         isNewApod = true;
     }
@@ -135,10 +143,10 @@ function showWelcomeDialog(apodDate)
     }
 
     dialog.addEventListener("click", (event) => {
-            if (event.target === dialog) {
-                dialog.close();
-            }
-        },
+        if (event.target === dialog) {
+            dialog.close();
+        }
+    },
         { once: true }
     );
 
@@ -155,8 +163,7 @@ function showWelcomeDialog(apodDate)
 
 
 function getVisitorState()
-/* Get the visitor state from localStorage. This function retrieves the visitor's last visit date and the last APOD date they saw from localStorage. It returns an object containing these two pieces of information. If there is no stored data, it returns default values with empty strings for both dates. This is used for tracking the user's visit history and displaying relevant information in the welcome message. */
-{
+/* Get the visitor state from localStorage. This function retrieves the visitor's last visit date and the last APOD date they saw from localStorage. It returns an object containing these two pieces of information. If there is no stored data, it returns default values with empty strings for both dates. This is used for tracking the user's visit history and displaying relevant information in the welcome message. */ {
     const stored = getLocalStorage(VISITOR_STORAGE_KEY);
     if (stored && typeof stored === "object") {
         return {
@@ -170,16 +177,14 @@ function getVisitorState()
 
 
 function setVisitorState(state)
-/* Set the visitor state in localStorage. This function takes an object containing the visitor's last visit date and the last APOD date they saw, and stores it in localStorage under the VISITOR_STORAGE_KEY. This allows us to keep track of the user's visit history and the APOD they last saw, which can be used to customize their experience when they return to the site. */
-{
+/* Set the visitor state in localStorage. This function takes an object containing the visitor's last visit date and the last APOD date they saw, and stores it in localStorage under the VISITOR_STORAGE_KEY. This allows us to keep track of the user's visit history and the APOD they last saw, which can be used to customize their experience when they return to the site. */ {
     setLocalStorage(VISITOR_STORAGE_KEY, state);
 }
 
 
 
 function renderFavoriteGallery()
-/* This function renders the favorite gallery on the page. It retrieves the user's favorite NASA images and APODs from localStorage, and creates cards for each of them to display in the gallery. If there are no favorites, it shows a message indicating that there are no favorites yet. The function also sets up the necessary event listeners for the favorite toggle buttons on each card, so that users can easily add or remove items from their favorites directly from the gallery. */
-{
+/* This function renders the favorite gallery on the page. It retrieves the user's favorite NASA images and APODs from localStorage, and creates cards for each of them to display in the gallery. If there are no favorites, it shows a message indicating that there are no favorites yet. The function also sets up the necessary event listeners for the favorite toggle buttons on each card, so that users can easily add or remove items from their favorites directly from the gallery. */ {
     const gallery = document.getElementById("favorites-gallery");
     if (!gallery) return;
     gallery.textContent = "";
@@ -224,7 +229,10 @@ function renderFavoriteGallery()
         const metaLines = ["Type: NASA Picture Of The Day"];
         if (item?.date) metaLines.push(`Date: ${item.date}`);
 
-        const card = buildFavoriteCard(item, {
+        const resolvedImageUrl = resolveApodFavoriteImage(item);
+        const cardItem = resolvedImageUrl ? { ...item, imageUrl: resolvedImageUrl } : item;
+
+        const card = buildFavoriteCard(cardItem, {
             title: item?.title ?? "NASA Picture of the Day",
             alt: item?.title ?? "Favorite APOD",
             metaLines,

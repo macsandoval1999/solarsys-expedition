@@ -5,8 +5,7 @@
 export function setFavoriteButtonState(button, isFavorite)
 /* This function sets the state of a favorite button, including its appearance and accessibility attributes (aria-label and aria-pressed), based on whether the item is currently favorited or not. 
 parameters: button - the button element to update
-            isFavorite - a boolean indicating whether the item is favorited*/
-{
+            isFavorite - a boolean indicating whether the item is favorited*/ {
 	button.classList.toggle("is-favorited", isFavorite); // toggle the "is-favorited" class on the button element based on the isFavorite parameter, which can be used to apply different styles to the button when it is in a favorited state.
 	button.setAttribute("aria-pressed", isFavorite ? "true" : "false"); // This sets the "aria-pressed" attribute to "true" if the item is favorited, or "false" if it is not, which helps screen readers understand the state of the button.
 	button.textContent = isFavorite ? "★" : "☆"; // check if the item is favorited and set the button text to a filled star (★) if it is, or an empty star (☆) if it is not.
@@ -22,8 +21,7 @@ parameters: item - the item to be favorited
                 isFavorite - the initial favorite state (default: true)
                 onToggle - a callback function to handle toggle actions
                 onAfterToggle - a callback function to execute after toggling 
-return: the created favorite button element */
-{
+return: the created favorite button element */ {
 	const button = document.createElement("button");
 	button.type = "button";
 	button.className = "favorite-button";
@@ -52,17 +50,16 @@ parameters: item - the item to create a card for
                 linkUrl - a URL to link to in the card
                 linkText - the text for the link (defaults to the URL if not provided)
                 toggleBuilder - a function that creates a favorite toggle button for the item 
-return: a figure element representing the favorite card, or null if the item does not have an image URL */
-{
-    //Path 1
-    if (!item?.imageUrl) return null; // check if the item has an imageUrl property. If it does not, return null, as the card cannot be created without an image.
-    
-    // Path 2
+return: a figure element representing the favorite card, or null if the item does not have an image URL */ {
+	//Path 1
+	if (!item?.imageUrl) return null; // check if the item has an imageUrl property. If it does not, return null, as the card cannot be created without an image.
+
+	// Path 2
 	const figure = document.createElement("figure");
 	figure.className = "favorite-card";
 
 	const img = document.createElement("img");
-	img.src = item.imageUrl; 
+	img.src = item.imageUrl;
 	img.alt = config?.alt ?? config?.title ?? "Favorite"; //check if alt text is provided, and use it. If not provided, check if a title is provided and use that as alt text. If neither is provided, default to "Favorite".
 	img.loading = "lazy";
 	figure.appendChild(img);
@@ -84,7 +81,7 @@ return: a figure element representing the favorite card, or null if the item doe
 		figcaption.appendChild(meta);
 	});
 
-	if (config?.linkUrl) { 
+	if (config?.linkUrl) {
 		const link = document.createElement("a");
 		link.className = "favorite-meta favorite-meta-link";
 		link.href = config.linkUrl;
@@ -107,8 +104,7 @@ parameters: options - an object containing optional parameters:
                 alt - the alt text for the image
                 captionHtml - the HTML string for the caption
                 favoriteButton - a button element to toggle favorite state 
-return: a figure element representing the gallery image card */
-{
+return: a figure element representing the gallery image card */ {
 	const figure = document.createElement("figure");
 	figure.classList.add("planet-image-card");
 
@@ -116,8 +112,8 @@ return: a figure element representing the gallery image card */
 	img.src = options.src;
 	img.alt = options.alt ?? "Gallery image";
 	img.loading = "lazy";
-    figure.appendChild(img);
-    
+	figure.appendChild(img);
+
 	if (options.favoriteButton) {
 		figure.appendChild(options.favoriteButton);
 	}
@@ -135,8 +131,7 @@ export function buildNasaCaption(metadata, displayName)
 /* This function builds the caption HTML for a NASA image. It takes metadata about the image and the display name of the planet, and returns an HTML string that includes the title, date created, creator, and planet name.
 parameters: metadata - an object containing metadata about the NASA image
             displayName - the display name of the planet
-return: an HTML string representing the caption */
-{
+return: an HTML string representing the caption */ {
 	const title = metadata?.title ?? `${displayName} NASA image`;
 	const dateCreated = metadata?.date_created ?? "Date unavailable";
 	const secondaryCreator = metadata?.secondary_creator ?? "Creator unavailable";
@@ -151,7 +146,7 @@ return: an HTML string representing the caption */
 
 
 export function createApodCard(options)
-/* This function creates an APOD (Astronomy Picture of the Day) card. It takes an options object that can include the title, favorite button, date, media type, media URL, explanation, and meta URL. The function returns an article element representing the APOD card.
+/* This function creates an APOD (Astronomy Picture of the Day) card. It takes an options object that can include the title, favorite button, date, media type, media URL, thumbnail URL, explanation, and meta URL. The function returns an article element representing the APOD card.
 parameters: options - an object containing optional parameters:
                 title - the title of the APOD
                 favoriteButton - a button element to toggle favorite state
@@ -160,8 +155,7 @@ parameters: options - an object containing optional parameters:
                 mediaUrl - the URL of the media
                 explanation - the explanation text for the APOD
                 metaUrl - the URL for additional metadata
-return: an article element representing the APOD card */
-{
+return: an article element representing the APOD card */ {
 	const card = document.createElement("article");
 	card.className = "apod-card";
 
@@ -181,13 +175,14 @@ return: an article element representing the APOD card */
 	}
 
 	if (options.mediaType === "video") {
-		const iframe = document.createElement("iframe");
-		iframe.className = "apod-media";
-		iframe.src = options.mediaUrl;
-		iframe.title = options.title ?? "APOD video";
-		iframe.loading = "lazy";
-		iframe.allowFullscreen = true;
-		card.appendChild(iframe);
+		const videoElement = buildApodVideoElement({
+			mediaUrl: options.mediaUrl,
+			title: options.title,
+			thumbnailUrl: options.thumbnailUrl,
+		});
+		if (videoElement) {
+			card.appendChild(videoElement);
+		}
 	} else if (options.mediaUrl) {
 		const img = document.createElement("img");
 		img.className = "apod-media";
@@ -226,4 +221,71 @@ return: an article element representing the APOD card */
 
 	card.appendChild(meta);
 	return card;
+}
+
+function buildApodVideoElement({ mediaUrl, title, thumbnailUrl })
+/* Build a resilient APOD video element that supports YouTube/Vimeo embeds and direct video files. */ {
+	if (!mediaUrl) return null;
+
+	const trimmedUrl = mediaUrl.trim();
+	const isDirectVideo = /\.(mp4|webm|ogg)(\?.*)?$/i.test(trimmedUrl);
+
+	if (isDirectVideo) {
+		const video = document.createElement("video");
+		video.className = "apod-media";
+		video.src = trimmedUrl;
+		video.controls = true;
+		video.preload = "metadata";
+		if (thumbnailUrl) {
+			video.poster = thumbnailUrl;
+		}
+		return video;
+	}
+
+	const embedUrl = normalizeVideoEmbedUrl(trimmedUrl);
+	const iframe = document.createElement("iframe");
+	iframe.className = "apod-media";
+	iframe.src = embedUrl;
+	iframe.title = title ?? "APOD video";
+	iframe.loading = "lazy";
+	iframe.allowFullscreen = true;
+	iframe.setAttribute(
+		"allow",
+		"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+	);
+	iframe.referrerPolicy = "no-referrer-when-downgrade";
+	return iframe;
+}
+
+function normalizeVideoEmbedUrl(url)
+/* Convert common video links into embeddable URLs. */ {
+	try {
+		const parsed = new URL(url);
+		const host = parsed.hostname.replace("www.", "");
+
+		if (host === "youtube.com" || host === "m.youtube.com") {
+			const videoId = parsed.searchParams.get("v");
+			if (videoId) {
+				return `https://www.youtube.com/embed/${videoId}`;
+			}
+		}
+
+		if (host === "youtu.be") {
+			const videoId = parsed.pathname.replace("/", "");
+			if (videoId) {
+				return `https://www.youtube.com/embed/${videoId}`;
+			}
+		}
+
+		if (host === "vimeo.com") {
+			const videoId = parsed.pathname.split("/").filter(Boolean)[0];
+			if (videoId) {
+				return `https://player.vimeo.com/video/${videoId}`;
+			}
+		}
+	} catch (error) {
+		return url;
+	}
+
+	return url;
 }

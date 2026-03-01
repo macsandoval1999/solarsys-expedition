@@ -20,6 +20,8 @@ export async function initSolarSystem()
 imports: loadPlanetsConfig from ./solarSystem.mjs, Planet from ./solarPlanet.mjs
 */{
     const system = document.getElementById("solar-system");
+    initFullscreenToggle();
+    initOrbitToggle();
     const planets = await loadPlanetsConfig(); // Load the planet configuration data from the JSON file. This will give us an array of planet objects with their respective data, such as name, distance from the sun, and other properties that we can use to create the visualization. This function uses the json file mentioned in the loadPlanetsConfig declaration.
 
     const nowSeconds = Date.now() / 1000; // Current time in seconds, used for calculating the animation delay for each planet's orbit to create a dynamic effect where the planets are at different positions in their orbits when the page loads. This is better than having them all start at the same position, which would look less natural.
@@ -49,4 +51,54 @@ imports: loadPlanetsConfig from ./solarSystem.mjs, Planet from ./solarPlanet.mjs
 
         system.appendChild(orbit); // Finally, append the orbit (which contains the orbitSpinner and the planet) to the main solar system container in the DOM. This will add the planet and its orbit to the overall solar system visualization on the page.
     });
+}
+
+function initFullscreenToggle()
+/* This function enables a fullscreen toggle button for the solar system container. */ {
+    const container = document.getElementById("solsystem-container");
+    const button = document.getElementById("fullscreen-toggle");
+    if (!container || !button) return;
+
+    const updateState = () => {
+        const isFullscreen = document.fullscreenElement === container;
+        button.textContent = isFullscreen ? "Minimize" : "Fullscreen";
+        button.setAttribute("aria-pressed", isFullscreen ? "true" : "false");
+        button.setAttribute("aria-label", isFullscreen ? "Exit fullscreen" : "Enter fullscreen");
+        container.classList.toggle("is-fullscreen", isFullscreen);
+    };
+
+    button.addEventListener("click", async () => {
+        try {
+            if (document.fullscreenElement === container) {
+                await document.exitFullscreen();
+            } else if (container.requestFullscreen) {
+                await container.requestFullscreen();
+            }
+        } catch (error) {
+            console.error("Fullscreen toggle failed", error);
+        }
+    });
+
+    document.addEventListener("fullscreenchange", updateState);
+    updateState();
+}
+
+function initOrbitToggle()
+/* This function toggles orbit line visibility in the solar system. */ {
+    const container = document.getElementById("solsystem-container");
+    const button = document.getElementById("orbit-toggle");
+    if (!container || !button) return;
+
+    const updateState = (isVisible) => {
+        button.setAttribute("aria-pressed", isVisible ? "true" : "false");
+        button.setAttribute("aria-label", isVisible ? "Hide orbit lines" : "Show orbit lines");
+        container.classList.toggle("hide-orbits", !isVisible);
+    };
+
+    button.addEventListener("click", () => {
+        const isVisible = !container.classList.contains("hide-orbits");
+        updateState(!isVisible);
+    });
+
+    updateState(true);
 }
