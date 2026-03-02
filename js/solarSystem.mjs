@@ -7,7 +7,7 @@ import { Planet } from "./solarPlanet.mjs";
 
 
 export async function loadPlanetsConfig()
-/* This function loads the planet configuration data from the specified JSON file. It fetches the data, parses it as JSON, and returns an array of planet objects. After extensive research, I couldn't find an api that had the information I felt was also needed about the planets. I created a JSON file with that data.*/{
+/* This function loads the planet configuration data from the specified JSON file. It fetches the data, parses it as JSON, and returns an array of planet objects. After extensive research, I couldn't find an api that had the information I felt was also needed about the planets. I created a JSON file with that data.*/ {
     const response = await fetch(new URL("../assets/json/planets.json", import.meta.url));
     const data = await response.json();
     return Object.values(data); // We return the values of the data object as an array, since the JSON file is structured as an object with planet names as keys and their respective data as values. By using Object.values, we can easily get an array of planet objects that we can then use to create our solar system visualization.
@@ -18,7 +18,7 @@ export async function loadPlanetsConfig()
 export async function initSolarSystem()
 /* This function initializes the solar system visualization on the page. It loads the planet configuration data, creates the necessary DOM elements for each planet and its orbit, and applies the appropriate styles and animations to create a dynamic representation of the solar system. 
 imports: loadPlanetsConfig from ./solarSystem.mjs, Planet from ./solarPlanet.mjs
-*/{
+*/ {
     const system = document.getElementById("solar-system");
     initFullscreenToggle();
     initOrbitToggle();
@@ -59,6 +59,13 @@ function initFullscreenToggle()
     const button = document.getElementById("fullscreen-toggle");
     if (!container || !button) return;
 
+    const supportsFullscreen = Boolean(
+        document.fullscreenEnabled ||
+        document.webkitFullscreenEnabled ||
+        container.requestFullscreen ||
+        container.webkitRequestFullscreen
+    );
+
     const updateState = () => {
         const isFullscreen = document.fullscreenElement === container;
         button.textContent = isFullscreen ? "Minimize" : "Fullscreen";
@@ -67,12 +74,21 @@ function initFullscreenToggle()
         container.classList.toggle("is-fullscreen", isFullscreen);
     };
 
+    if (!supportsFullscreen) {
+        button.textContent = "Fullscreen Unavailable";
+        button.setAttribute("aria-pressed", "false");
+        button.setAttribute("aria-label", "Fullscreen unsupported in this browser");
+        return;
+    }
+
     button.addEventListener("click", async () => {
         try {
             if (document.fullscreenElement === container) {
                 await document.exitFullscreen();
             } else if (container.requestFullscreen) {
                 await container.requestFullscreen();
+            } else if (container.webkitRequestFullscreen) {
+                await container.webkitRequestFullscreen();
             }
         } catch (error) {
             console.error("Fullscreen toggle failed", error);
